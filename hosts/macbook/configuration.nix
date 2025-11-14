@@ -3,7 +3,7 @@
 let
   user = "bgevko";
   home = "/Users/${user}";
-  defaultWallpaper = "${home}/nixos/configs/walls/wall4.png";
+  defaultWallpaper = "${home}/nixos/configs/walls/wall4-adj.png";
 in
 {
   nix.settings.experimental-features = "nix-command flakes";
@@ -21,6 +21,10 @@ in
   };
 
   nixpkgs.config.allowUnfree = true;
+
+  fonts.packages = with pkgs; [
+    nerd-fonts.fira-code
+  ];
 
   # System defaults
   system.defaults = {
@@ -57,13 +61,64 @@ in
     };
   };
 
+  launchd.user.agents = {
+    raycast = {
+      serviceConfig = {
+        Label = "com.raycast.launcher";
+        ProgramArguments = [
+          "/usr/bin/open"
+          "-a"
+          "/Applications/Raycast.app"
+        ];
+        RunAtLoad = true;
+        KeepAlive = false;
+      };
+    };
+
+    leaderkey = {
+      serviceConfig = {
+        Label = "com.leaderkey.launcher";
+        ProgramArguments = [
+          "/usr/bin/open"
+          "-a"
+          "/Applications/Leader Key.app"
+        ];
+        RunAtLoad = true;
+        KeepAlive = false;
+      };
+    };
+
+    aerospace = {
+      serviceConfig = {
+        Label = "com.aerospace.launcher";
+        ProgramArguments = [
+          "/usr/bin/open"
+          "-a"
+          "/Applications/AeroSpace.app"
+        ];
+        RunAtLoad = true;
+        KeepAlive = false;
+      };
+    };
+
+    ssh_add = {
+      serviceConfig = {
+        Label = "com.user.ssh_add";
+        ProgramArguments = [
+          "/usr/bin/ssh-add"
+          "--apple-use-keychain"
+          "$~/.ssh/ssh-github-personal"
+        ];
+        RunAtLoad = true;
+        KeepAlive = false;
+      };
+    };
+  };
+
   # Packages / programs
   environment.systemPackages = with pkgs; [
-    vim
     zsh
     fish
-    starship
-    neovim
     ripgrep
     git
     kitty
@@ -77,6 +132,9 @@ in
     fd
     imagemagick
     mermaid-cli
+    home-manager
+    openssh
+    qutebrowser
 
     # LSPs
     lua-language-server
@@ -116,6 +174,7 @@ in
       "jq"
       "mas"
       "gs"
+      "neovim"
     ];
     taps = [
       "nikitabobko/tap"
@@ -128,10 +187,9 @@ in
       "brave-browser"
       "font-space-mono-nerd-font"
       "1password"
+      "logi-options+"
+      "gimp"
     ];
-    masApps = {
-      "ColorSlurp" = 1287239339;
-    };
     onActivation.cleanup = "zap";
     onActivation.autoUpdate = true;
     onActivation.upgrade = true;

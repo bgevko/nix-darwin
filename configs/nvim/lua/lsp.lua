@@ -57,7 +57,6 @@ return {
 						Lua = {
 							workspace = { checkThirdParty = false },
 							diagnostics = { globals = { "vim" } },
-							hint = { enable = true },
 						},
 					},
 				},
@@ -121,8 +120,6 @@ return {
 		"saghen/blink.cmp",
 		dependencies = {
 			"rafamadriz/friendly-snippets",
-			"zbirenbaum/copilot.lua",
-			"giuxtaposition/blink-cmp-copilot", -- copilot source for blink
 		},
 
 		version = "1.*",
@@ -142,18 +139,8 @@ return {
 				enabled = true,
 			},
 
-			-- Extend sources and add copilot provider
 			sources = {
-				providers = {
-					copilot = {
-						async = true,
-						module = "blink-cmp-copilot",
-						name = "copilot",
-						score_offset = 100,
-					},
-				},
-
-				default = { "lsp", "path", "snippets", "buffer", "copilot" },
+				default = { "lsp", "path", "snippets", "buffer" },
 			},
 
 			fuzzy = {
@@ -240,11 +227,7 @@ return {
 						stdin = true,
 					},
 				},
-
-				format_on_save = {
-					lsp_format = "fallback",
-					timeout_ms = 1000,
-				},
+				format_on_save = false,
 			})
 		end,
 	},
@@ -256,19 +239,19 @@ return {
 		"zbirenbaum/copilot.lua",
 		config = function()
 			require("copilot").setup({
-				suggestion = { enabled = true },
-				panel = { enabled = false },
-				filetypes = {
-					["*"] = true,
+				suggestion = {
+					enabled = true,
+					auto_trigger = true,
+					hide_during_completion = true,
+					debounce = 75,
+					trigger_on_accept = true,
+					keymap = {
+						accept = "<C-f>",
+						accept_word = false,
+						accept_line = false,
+					},
 				},
 			})
 		end,
-	},
-
-	-------------------------------------------------------------------------
-	--COPILOT → BLINK SOURCE INTEGRATION
-	-------------------------------------------------------------------------
-	{
-		"giuxtaposition/blink-cmp-copilot",
 	},
 }

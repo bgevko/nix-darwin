@@ -21,27 +21,33 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     inputs@{
       self,
       nix-darwin,
       nixpkgs,
+      stylix,
       home-manager,
       ...
     }:
     {
       home-manager.sharedModules = [
-        inputs.sops-nix.homeManagerModules.sops
+        inputs.sops-nix.homeModules.sops
       ];
-      darwinConfigurations."macbook" = nix-darwin.lib.darwinSystem {
+      darwinConfigurations."Bogdans-MacBook-Pro" = nix-darwin.lib.darwinSystem {
         system = "x86_64-darwin";
         modules = [
           ./hosts/macbook/configuration.nix
+          stylix.darwinModules.stylix
           home-manager.darwinModules.home-manager
           {
             home-manager = {
-              useGlobalPkgs = true;
+              useGlobalPkgs = false;
               useUserPackages = true;
               extraSpecialArgs = { inherit inputs; };
               users.bgevko = import ./home/bgevko-mac.nix;

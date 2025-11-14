@@ -255,3 +255,19 @@ end, {
 vim.keymap.set("n", "<leader>U", "<cmd>UndotreeToggle<cr>", {
 	desc = "Toggle undo tree",
 })
+
+-- Toggle auto format
+local function toggle_autoformat()
+	vim.g.autoformat = not vim.g.autoformat
+	local msg = vim.g.autoformat and "Autoformat Enabled" or "Autoformat Disabled"
+	vim.notify(msg, vim.g.autoformat and vim.log.levels.INFO or vim.log.levels.WARN)
+end
+
+-- keymap like LazyVim: <leader>uf
+vim.keymap.set("n", "<leader>uf", toggle_autoformat, {
+	desc = "Toggle Global Autoformat",
+})
+
+-- code actions
+vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
+vim.keymap.set("v", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })

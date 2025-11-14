@@ -24,7 +24,6 @@ vim.opt.fillchars = {
 	diff = "╱",
 	eob = " ",
 }
-
 vim.opt.foldlevel = 99
 vim.opt.foldmethod = "indent"
 vim.opt.foldtext = ""
@@ -37,12 +36,11 @@ vim.opt.inccommand = "nosplit"
 vim.opt.jumpoptions = "view"
 vim.opt.laststatus = 3
 vim.opt.linebreak = true
-vim.opt.list = true
 vim.opt.mouse = "a"
 vim.opt.number = true
+vim.opt.relativenumber = true
 vim.opt.pumblend = 10
 vim.opt.pumheight = 10
-vim.opt.relativenumber = true
 vim.opt.ruler = false
 vim.opt.scrolloff = 4
 
@@ -69,7 +67,6 @@ vim.opt.spelllang = { "en" }
 vim.opt.splitbelow = true
 vim.opt.splitkeep = "screen"
 vim.opt.splitright = true
-vim.opt.statuscolumn = "%s%=%{v:lnum}"
 vim.opt.tabstop = 2
 vim.opt.termguicolors = true
 vim.opt.timeoutlen = 300

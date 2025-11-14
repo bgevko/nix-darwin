@@ -4,7 +4,7 @@
 # You can use it to add commands that run after AeroSpace startup.
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = [
-  'exec-and-forget borders active_color=0xffa9dd9d && brew services start sketchybar'
+  'exec-and-forget brew services start borders'
 ]
 
 # Start AeroSpace at login

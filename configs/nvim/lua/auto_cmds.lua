@@ -15,7 +15,6 @@ local wrap_spell = augroup("wrap_spell", { clear = true })
 local json_conceal = augroup("json_conceal", { clear = true })
 local auto_create_dir = augroup("auto_create_dir", { clear = true })
 local treesitter_notify = augroup("treesitter_notify", { clear = true })
-local lsp_missing = vim.api.nvim_create_augroup("lsp_missing", { clear = true })
 
 -- ──────────────────────────────────────────────────────────────
 -- Highlight on yank
@@ -217,10 +216,25 @@ autocmd("FileType", {
 	end,
 })
 
--- Format on save
+--Format on save (respects global autoformat toggle)
 autocmd("BufWritePre", {
-  pattern = "*",
-  callback = function(args)
-    require("conform").format({ bufnr = args.buf })
-  end,
+	pattern = "*",
+	callback = function(args)
+		if vim.g.autoformat == false then
+			return
+		end
+		require("conform").format({ bufnr = args.buf })
+	end,
 })
+
+-- Open dashboard when no files are specified
+-- NOTE: Strange highlighting bug when this is enabled. Turning off for later debugging.
+-- autocmd("VimEnter", {
+-- 	pattern = "*",
+-- 	callback = function()
+-- 		local Snacks = require("snacks")
+-- 		if #vim.fn.argv() == 0 and vim.fn.line("$") == 1 and vim.fn.getline(1) == "" then
+-- 			Snacks.dashboard()
+-- 		end
+-- 	end,
+-- })
