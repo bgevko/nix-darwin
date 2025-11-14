@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+# Usage: ./set Dracula
+# Expects a file named Dracula.conf in the same directory as kitty.conf.
+
+set -e
+
+THEME_NAME="$1"
+
+if [ -z "$THEME_NAME" ]; then
+  echo "Usage: $0 <theme name>"
+  exit 1
+fi
+
+DIR="$(cd "$(dirname "$0")" && pwd)"
+KITTY_CONF="$DIR/kitty.conf"
+NEW_THEME_FILE="$DIR/${THEME_NAME}"
+
+if [ ! -f "$KITTY_CONF" ]; then
+  echo "Error: kitty.conf not found in $DIR"
+  exit 1
+fi
+
+if [ ! -f "$NEW_THEME_FILE" ]; then
+  echo "Theme '$THEME_NAME' not found. Keeping existing theme."
+  exit 0
+fi
+
+# Replace the include line
+# Match lines beginning with 'include ./'
+sed -i.bak "s|^include ./.*|include ./${THEME_NAME}|" "$KITTY_CONF"
+
+kitty @ load-config
+echo "Theme switched to $THEME_NAME"
