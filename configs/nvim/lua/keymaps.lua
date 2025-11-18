@@ -267,7 +267,3 @@ end
 vim.keymap.set("n", "<leader>uf", toggle_autoformat, {
 	desc = "Toggle Autoformat",
 })
-
--- code actions
-vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
-vim.keymap.set("v", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })

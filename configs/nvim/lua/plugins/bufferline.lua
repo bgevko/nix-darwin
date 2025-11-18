@@ -62,6 +62,11 @@ return {
 					always_show_bufferline = true,
 				},
 			})
+
+			-- Keymaps
+			local map = vim.keymap.set
+			map("n", "]", "<cmd>BufferLineCycleNext<CR>", { desc = "Next buffer" })
+			map("n", "[", "<cmd>BufferLineCyclePrev<CR>", { desc = "Previous buffer" })
 		end,
 	},
 }

@@ -30,6 +30,7 @@ in
     trash-cli
     base16-schemes
     pokemon-colorscripts-mac
+    pnpm
   ];
 
   stylix = {

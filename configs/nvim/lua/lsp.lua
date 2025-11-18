@@ -110,6 +110,21 @@ return {
 					end
 				end,
 			})
+
+			-- Custom LSP keymaps
+			local map = vim.keymap.set
+			local Snacks = require("snacks")
+			map("n", "<leader>cl", Snacks.picker.lsp_config, { desc = "LSP Configurations" })
+			map("n", "gd", vim.lsp.buf.definition, { desc = "Goto Definition" })
+			map("n", "gr", vim.lsp.buf.references, { desc = "Goto References" })
+			map("n", "gi", vim.lsp.buf.implementation, { desc = "Goto Implementation" })
+			map("n", "gy", vim.lsp.buf.type_definition, { desc = "Goto Type Definition" })
+			map("n", "gD", vim.lsp.buf.declaration, { desc = "Goto Declaration" })
+			map("n", "K", vim.lsp.buf.hover, { desc = "Hover Documentation" })
+			map("n", "gK", vim.lsp.buf.signature_help, { desc = "Signature Help" })
+			map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
+			map("n", "<leader>cr", vim.lsp.buf.rename, { desc = "Rename Symbol" })
+			map("n", "<leader>cR", Snacks.rename.rename_file, { desc = "Rename File" })
 		end,
 	},
 

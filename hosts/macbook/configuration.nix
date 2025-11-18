@@ -188,6 +188,7 @@ in
       "1password"
       "logi-options+"
       "gimp"
+      "losslesscut"
     ];
     onActivation.cleanup = "zap";
     onActivation.autoUpdate = true;
