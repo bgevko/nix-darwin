@@ -1,0 +1,3 @@
+- [ ] Set up sketchybar
+- [ ] Set up DAP support for neovim
+- [ ] Integrate with linux configs
