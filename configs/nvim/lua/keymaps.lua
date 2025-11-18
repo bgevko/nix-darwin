@@ -4,7 +4,11 @@
 vim.g.mapleader = " "
 
 -- keymaps
-vim.keymap.set("n", "<leader>e", "<cmd>lua Snacks.explorer()<cr>", {
+vim.keymap.set("n", "<leader>e", "<cmd>lua Snacks.explorer.open()<cr>", {
+	desc = "File Explorer",
+	silent = true,
+})
+vim.keymap.set("n", "<leader>E", "<cmd>lua Snacks.explorer.reveal()<cr>", {
 	desc = "File Explorer",
 	silent = true,
 })

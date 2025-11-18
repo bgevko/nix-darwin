@@ -172,7 +172,6 @@ in
       "borders"
       "sketchybar"
       "jq"
-      "mas"
       "gs"
       "neovim"
     ];
