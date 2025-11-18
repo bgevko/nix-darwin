@@ -1,144 +1,153 @@
 {
-  "actions": [
+  "actions" : [
     {
-      "actions": [
+      "actions" : [
         {
-          "key": "p",
-          "type": "application",
-          "label": "1Password",
-          "value": "/Applications/1Password.app"
+          "key" : "p",
+          "label" : "1Password",
+          "type" : "application",
+          "value" : "/Applications/1Password.app"
         }
       ],
-      "iconPath": "lock.shield.fill",
-      "label": "1Password",
-      "key": "1",
-      "type": "group"
+      "iconPath" : "lock.shield.fill",
+      "key" : "1",
+      "label" : "1Password",
+      "type" : "group"
     },
     {
-      "actions": [
+      "actions" : [
         {
-          "key": "c",
-          "type": "application",
-          "value": "/System/Applications/Calendar.app"
+          "key" : "c",
+          "type" : "application",
+          "value" : "/System/Applications/Calendar.app"
         },
         {
-          "key": "n",
-          "label": "Notion",
-          "type": "application",
-          "value": "/Applications/Notion.app"
+          "key" : "n",
+          "label" : "Notion",
+          "type" : "application",
+          "value" : "/Applications/Notion.app"
         }
       ],
-      "iconPath": "cat",
-      "key": "a",
-      "label": "Apps",
-      "type": "group"
+      "iconPath" : "cat",
+      "key" : "a",
+      "label" : "Apps",
+      "type" : "group"
     },
     {
-      "actions": [
+      "actions" : [
         {
-          "key": "d",
-          "type": "folder",
-          "value": "/Users/bgevko/Downloads"
+          "key" : "d",
+          "label" : "Downloads",
+          "type" : "folder",
+          "value" : "/Users/bgevko/Downloads"
         },
         {
-          "key": "a",
-          "type": "folder",
-          "value": "/Users/Applications"
+          "key" : "a",
+          "label" : "Applications",
+          "type" : "folder",
+          "value" : "/Users/Applications"
+        },
+        {
+          "iconPath" : "folder",
+          "key" : "s",
+          "label" : "Screen",
+          "type" : "folder",
+          "value" : "/Users/bgevko/Desktop/Screen"
         }
       ],
-      "iconPath": "bookmark",
-      "key": "f",
-      "label": "Finder",
-      "type": "group"
+      "iconPath" : "bookmark",
+      "key" : "f",
+      "label" : "Finder",
+      "type" : "group"
     },
     {
-      "actions": [
+      "actions" : [
         {
-          "key": "d",
-          "type": "application",
-          "value": "/Applications/Discord.app"
+          "key" : "d",
+          "type" : "application",
+          "value" : "/Applications/Discord.app"
         }
       ],
-      "iconPath": "message",
-      "key": "m",
-      "label": "Messaging",
-      "type": "group"
+      "iconPath" : "message",
+      "key" : "m",
+      "label" : "Messaging",
+      "type" : "group"
     },
     {
-      "actions": [
+      "actions" : [
         {
-          "key": "c",
-          "type": "url",
-          "value": "raycast://extensions/raycast/system/open-camera"
+          "key" : "c",
+          "type" : "url",
+          "value" : "raycast://extensions/raycast/system/open-camera"
         },
         {
-          "key": "e",
-          "type": "url",
-          "value": "raycast://extensions/raycast/emoji-symbols/search-emoji-symbols"
+          "key" : "e",
+          "type" : "url",
+          "value" : "raycast://extensions/raycast/emoji-symbols/search-emoji-symbols"
         },
         {
-          "key": "p",
-          "type": "url",
-          "value": "raycast://confetti"
+          "key" : "p",
+          "type" : "url",
+          "value" : "raycast://confetti"
         }
       ],
-      "iconPath": "character.textbox",
-      "key": "r",
-      "label": "Raycast",
-      "type": "group"
+      "iconPath" : "character.textbox",
+      "key" : "r",
+      "label" : "Raycast",
+      "type" : "group"
     },
     {
-      "actions": [
+      "actions" : [
         {
-          "key": "L",
-          "label": "Log Out",
-          "type": "command",
-          "value": "osascript -e 'tell application \"System Events\" to log out'"
+          "key" : "L",
+          "label" : "Log Out",
+          "type" : "command",
+          "value" : "osascript -e 'tell application \"System Events\" to log out'"
         },
         {
-          "key": "s",
-          "label": "Sleep",
-          "type": "command",
-          "value": "osascript -e 'tell application \"System Events\" to sleep'"
+          "key" : "s",
+          "label" : "Sleep",
+          "type" : "command",
+          "value" : "osascript -e 'tell application \"System Events\" to sleep'"
         },
         {
-          "key": "S",
-          "label": "Shutdown",
-          "type": "command",
-          "value": "osascript -e 'tell application \"System Events\" to shut down'"
+          "key" : "S",
+          "label" : "Shutdown",
+          "type" : "command",
+          "value" : "osascript -e 'tell application \"System Events\" to shut down'"
         },
         {
-          "key": "r",
-          "label": "Reboot",
-          "type": "command",
-          "value": "osascript -e 'tell application \"System Events\" to restart'"
+          "key" : "r",
+          "label" : "Reboot",
+          "type" : "command",
+          "value" : "osascript -e 'tell application \"System Events\" to restart'"
         }
       ],
-      "iconPath": "laptopcomputer",
-      "key": "s",
-      "label": "System",
-      "type": "group"
+      "iconPath" : "laptopcomputer",
+      "key" : "s",
+      "label" : "System",
+      "type" : "group"
     },
     {
-      "key": "enter",
-      "label": "Terminal",
-      "type": "application",
-      "value": "/Applications/Nix Apps/kitty.app/"
+      "key" : "enter",
+      "label" : "Terminal",
+      "type" : "application",
+      "value" : "/Applications/Nix Apps/kitty.app/"
     },
     {
-      "actions": [
+      "actions" : [
         {
-          "key": "n",
-          "label": "Nix Search",
-          "type": "url",
-          "value": "https://search.nixos.org/packages"
+          "key" : "n",
+          "label" : "Nix Search",
+          "type" : "url",
+          "value" : "https://search.nixos.org/packages"
         }
       ],
-      "iconPath": "globe",
-      "key": "u",
-      "label": "Link",
-      "type": "group"
+      "iconPath" : "globe",
+      "key" : "u",
+      "label" : "Link",
+      "type" : "group"
     }
   ],
-  "type": "group"
+  "type" : "group"
 }
