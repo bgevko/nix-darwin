@@ -16,17 +16,17 @@ vim.opt.confirm = true
 vim.opt.cursorline = true
 vim.opt.expandtab = true
 
-vim.opt.fillchars = {
-	foldopen = "",
-	foldclose = "",
-	fold = " ",
-	foldsep = " ",
-	diff = "╱",
-	eob = " ",
-}
-vim.opt.foldlevel = 99
-vim.opt.foldmethod = "indent"
-vim.opt.foldtext = ""
+-- vim.opt.fillchars = {
+-- 	foldopen = "",
+-- 	foldclose = "",
+-- 	fold = " ",
+-- 	foldsep = " ",
+-- 	diff = "╱",
+-- 	eob = " ",
+-- }
+-- vim.opt.foldlevel = 99
+-- vim.opt.foldmethod = "indent"
+-- vim.opt.foldtext = ""
 vim.opt.formatexpr = "v:lua.vim.lsp.formatexpr()"
 vim.opt.formatoptions = "jcroqlnt"
 vim.opt.grepformat = "%f:%l:%c:%m"

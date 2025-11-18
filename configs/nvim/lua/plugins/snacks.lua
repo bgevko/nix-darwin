@@ -33,7 +33,7 @@ return {
 			-- Live Grep
 			map("n", "<leader>/", function()
 				picker.grep()
-			end, { desc = "Search in project" })
+			end, { desc = "Grep Text" })
 
 			-- Buffers
 			map("n", "<leader>,", function()

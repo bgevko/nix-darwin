@@ -57,7 +57,7 @@ return {
 			function()
 				require("noice").cmd("dismiss")
 			end,
-			desc = "Dismiss All",
+			desc = "Dismiss Notifications",
 		},
 	},
 	config = function(_, opts)

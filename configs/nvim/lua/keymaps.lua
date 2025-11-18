@@ -5,7 +5,7 @@ vim.g.mapleader = " "
 
 -- keymaps
 vim.keymap.set("n", "<leader>e", "<cmd>lua Snacks.explorer()<cr>", {
-	desc = "Open Snacks File Explorer",
+	desc = "File Explorer",
 	silent = true,
 })
 
@@ -211,15 +211,11 @@ vim.keymap.set("n", "<leader>;", ":!./local.sh<CR>", {
 })
 
 vim.keymap.set("n", "<leader>m", "<cmd>lua Snacks.dashboard()<cr>", {
-	desc = "Open dashboard",
+	desc = "Dashboard",
 	silent = true,
 })
 
 vim.keymap.set("n", "<leader>bb", "<cmd>e #<cr>", {
-	desc = "Switch to Other Buffer",
-})
-
-vim.keymap.set("n", "<leader>`", "<cmd>e #<cr>", {
 	desc = "Switch to Other Buffer",
 })
 
@@ -253,7 +249,7 @@ end, {
 })
 
 vim.keymap.set("n", "<leader>U", "<cmd>UndotreeToggle<cr>", {
-	desc = "Toggle undo tree",
+	desc = "Undo Tree",
 })
 
 -- Toggle auto format
@@ -265,7 +261,7 @@ end
 
 -- keymap like LazyVim: <leader>uf
 vim.keymap.set("n", "<leader>uf", toggle_autoformat, {
-	desc = "Toggle Global Autoformat",
+	desc = "Toggle Autoformat",
 })
 
 -- code actions
