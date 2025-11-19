@@ -8,9 +8,7 @@
   ];
   programs.fish = {
     enable = true;
-    interactiveShellInit = ''
-      cd ~/nixos
-    '';
+    interactiveShellInit = '''';
   };
   programs.starship = {
     enable = true;

@@ -267,3 +267,8 @@ end
 vim.keymap.set("n", "<leader>uf", toggle_autoformat, {
 	desc = "Toggle Autoformat",
 })
+
+-- Refresh browser with <leader>rr (MacOS Specific for now)
+vim.keymap.set("n", "<leader>rr", function()
+	vim.fn.system({ "osascript", "-e", 'tell application "Brave Browser" to reload active tab of front window' })
+end, { desc = "Refresh Browser" })

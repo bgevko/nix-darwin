@@ -71,9 +71,12 @@ in
   home.sessionPath = [
     "/opt/homebrew/bin"
     "/opt/homebrew/sbin"
+    "${config.home.homeDirectory}/.local/share/pnpm"
   ];
   home.sessionVariables = {
     SOPS_AGE_KEY_FILE = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
+    PNPM_HOME = "${config.home.homeDirectory}/.local/share/pnpm";
+
   };
 
   programs.home-manager.enable = true;
