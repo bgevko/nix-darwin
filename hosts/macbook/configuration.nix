@@ -26,10 +26,13 @@ in
     nerd-fonts.fira-code
   ];
 
+  # system.defaults.".GlobalPreferences"."com.apple.mouse.scaling" = 10.0;
+
   # System defaults
   system.defaults = {
     # Key repeat and speed
     NSGlobalDomain = {
+      "com.apple.trackpad.scaling" = 3.0;
       InitialKeyRepeat = 10;
       KeyRepeat = 2;
       ApplePressAndHoldEnabled = false;
