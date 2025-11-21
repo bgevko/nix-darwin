@@ -3,6 +3,7 @@
 -- Leaders
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
+vim.g.autoformat = true
 
 -- Globals (LazyVim-style)
 vim.g.markdown_recommended_style = 0

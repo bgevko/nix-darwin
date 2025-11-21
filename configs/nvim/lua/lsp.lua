@@ -150,7 +150,7 @@ return {
 				preset = "default",
 			},
 			signature = {
-				enabled = true,
+				enabled = false,
 			},
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer" },
@@ -222,6 +222,7 @@ return {
 		config = function()
 			require("copilot").setup({
 				suggestion = {
+					panel = { enabled = false },
 					enabled = true,
 					auto_trigger = true,
 					hide_during_completion = true,
