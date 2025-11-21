@@ -26,7 +26,7 @@ in
     nerd-fonts.fira-code
   ];
 
-  # system.defaults.".GlobalPreferences"."com.apple.mouse.scaling" = 10.0;
+  system.defaults.".GlobalPreferences"."com.apple.mouse.scaling" = 2.0;
 
   # System defaults
   system.defaults = {
@@ -151,7 +151,6 @@ in
     marksman
     docker-language-server
     yaml-language-server
-    rust-analyzer
     vscode-langservers-extracted
 
     # formatters
@@ -192,6 +191,7 @@ in
       "logi-options+"
       "gimp"
       "losslesscut"
+      "postman"
     ];
     onActivation.cleanup = "zap";
     onActivation.autoUpdate = true;

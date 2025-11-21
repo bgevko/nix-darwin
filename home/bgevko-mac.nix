@@ -31,11 +31,21 @@ in
     base16-schemes
     pokemon-colorscripts-mac
     pnpm
+
+    # rust
+    rustup
+
+    # go
+    go
+    gopls
+    gofumpt
+    golangci-lint
+    delve
   ];
 
   stylix = {
     enable = true;
-    # base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest";
     base16Scheme = {
       base00 = "#2d353b";
       base01 = "#343f44";
@@ -55,6 +65,7 @@ in
       base0F = "#b2b8b4";
     };
   };
+  programs.bat.enable = true;
 
   xdg.configFile = {
     "kitty".source = symlink "${dotfiles}/kitty";

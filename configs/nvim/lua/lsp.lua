@@ -4,6 +4,7 @@ return {
 	---------------------------------------------------------------------------
 	-- TREESITTER
 	---------------------------------------------------------------------------
+	--- Parsers are installed automatically
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
@@ -74,6 +75,7 @@ return {
 				docker = {},
 				yamlls = {},
 				cssls = {},
+				gopls = {},
 			}
 
 			-- 4. configure + warn + enable
@@ -116,7 +118,6 @@ return {
 			local Snacks = require("snacks")
 			map("n", "<leader>cl", Snacks.picker.lsp_config, { desc = "LSP Configurations" })
 			map("n", "gd", vim.lsp.buf.definition, { desc = "Goto Definition" })
-			-- map("n", "gr", vim.lsp.buf.references, { desc = "Goto References" })
 			map("n", "gr", function()
 				Snacks.picker.lsp_references()
 			end, { desc = "Goto References" })
@@ -139,28 +140,21 @@ return {
 		dependencies = {
 			"rafamadriz/friendly-snippets",
 		},
-
 		version = "1.*",
-
 		opts = {
 			keymap = { preset = "enter" },
-
 			appearance = {
 				nerd_font_variant = "mono",
 			},
-
 			snippets = {
 				preset = "default",
 			},
-
 			signature = {
 				enabled = true,
 			},
-
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer" },
 			},
-
 			fuzzy = {
 				implementation = "prefer_rust_with_warning",
 			},
@@ -178,63 +172,33 @@ return {
 		config = function()
 			require("conform").setup({
 				formatters_by_ft = {
-
-					-- Lua
 					lua = { "stylua" },
-
-					-- Shell / Bash
 					sh = { "shfmt" },
 					bash = { "shfmt" },
-
-					-- Python
 					python = { "isort", "black" },
-
-					-- JavaScript / TypeScript
 					javascript = { "prettierd", "prettier", stop_after_first = true },
 					javascriptreact = { "prettierd", "prettier", stop_after_first = true },
 					typescript = { "prettierd", "prettier", stop_after_first = true },
 					typescriptreact = { "prettierd", "prettier", stop_after_first = true },
-
-					-- Nix
 					nix = { "nixfmt" },
-
-					-- C / C++ / Obj-C
 					c = { "clang_format" },
 					cpp = { "clang_format" },
-
-					-- CMake
 					cmake = { "cmake_format" },
-
-					-- Rust
 					rust = { "rustfmt" },
-
-					-- HTML
 					html = { "prettierd", "prettier", stop_after_first = true },
-
-					-- Tailwindcss (same as HTML/JS)
 					astro = { "prettierd", "prettier", stop_after_first = true },
 					svelte = { "prettierd", "prettier", stop_after_first = true },
 					templ = { "prettierd", "prettier", stop_after_first = true },
-
-					-- JSON
 					json = { "prettierd", "prettier", stop_after_first = true },
 					jsonc = { "prettierd", "prettier", stop_after_first = true },
-
-					-- Markdown
 					markdown = { "prettierd", "prettier", stop_after_first = true },
-
-					-- Docker
 					dockerfile = { "dockfmt" },
-
-					-- YAML
 					yaml = { "yamlfmt" },
-
-					-- CSS / SCSS / LESS
 					css = { "prettierd", "prettier", stop_after_first = true },
 					scss = { "prettierd", "prettier", stop_after_first = true },
 					less = { "prettierd", "prettier", stop_after_first = true },
+					go = { "gofumpt", "gofmt", stop_after_first = true },
 
-					-- Fallback
 					["_"] = { "trim_whitespace" },
 				},
 

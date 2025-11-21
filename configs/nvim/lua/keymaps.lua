@@ -99,6 +99,47 @@ vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float, {
 	desc = "Line Diagnostics",
 })
 
+-- copy diagnostic message under cursor to clipboard
+vim.keymap.set("n", "ycd", function()
+	-- get diagnostic under cursor
+	local bufnr = 0
+	local line = vim.api.nvim_win_get_cursor(0)[1] - 1
+	local diags = vim.diagnostic.get(bufnr, { lnum = line })
+
+	if vim.tbl_isempty(diags) then
+		vim.notify("No diagnostics under cursor", vim.log.levels.INFO)
+		return
+	end
+
+	local messages = {}
+	for _, diag in ipairs(diags) do
+		table.insert(messages, diag.message)
+	end
+
+	-- copy to clipboard (using unnamedplus register)
+	vim.fn.setreg("+", table.concat(messages, "\n"))
+	vim.notify("Diagnostic message(s) copied to clipboard", vim.log.levels.INFO)
+end)
+
+-- copy all diagnostic messages in the current buffer to clipboard
+vim.keymap.set("n", "yd", function()
+	local bufnr = 0
+	local diags = vim.diagnostic.get(bufnr)
+
+	if vim.tbl_isempty(diags) then
+		vim.notify("No diagnostics in current buffer", vim.log.levels.INFO)
+		return
+	end
+
+	local messages = {}
+	for _, diag in ipairs(diags) do
+		table.insert(messages, string.format("Line %d: %s", diag.lnum + 1, diag.message))
+	end
+
+	vim.fn.setreg("+", table.concat(messages, "\n"))
+	vim.notify("All diagnostic messages copied to clipboard", vim.log.levels.INFO)
+end)
+
 vim.keymap.set("n", "]d", function()
 	diagnostic_goto(true)
 end, {
