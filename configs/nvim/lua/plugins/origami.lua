@@ -35,6 +35,11 @@ return {
 		config = function(_, opts)
 			require("origami").setup(opts)
 			vim.keymap.set("n", "<leader>ua", "zR", { desc = "Unfold all" })
+			vim.keymap.set("n", "<leader>h", function()
+				require("origami").h()
+			end)
+			-- vim.keymap.set("n", "l", function() require("origami").l() end)
+			-- vim.keymap.set("n", "<End>", function() require("origami").dollar() end)
 		end,
 	},
 }

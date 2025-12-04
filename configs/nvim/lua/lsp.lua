@@ -209,7 +209,9 @@ return {
 						stdin = true,
 					},
 				},
-				format_on_save = false,
+				format_on_save = {
+					lsp_fallback = true,
+				},
 			})
 		end,
 	},

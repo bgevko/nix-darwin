@@ -192,6 +192,7 @@ in
       "gimp"
       "losslesscut"
       "postman"
+      "figma"
     ];
     onActivation.cleanup = "zap";
     onActivation.autoUpdate = true;

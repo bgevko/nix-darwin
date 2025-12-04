@@ -119,7 +119,9 @@ vim.keymap.set("n", "ycd", function()
 	-- copy to clipboard (using unnamedplus register)
 	vim.fn.setreg("+", table.concat(messages, "\n"))
 	vim.notify("Diagnostic message(s) copied to clipboard", vim.log.levels.INFO)
-end)
+end, {
+	desc = "Yank Diagnostic under Cursor",
+})
 
 -- copy all diagnostic messages in the current buffer to clipboard
 vim.keymap.set("n", "yd", function()
@@ -138,7 +140,17 @@ vim.keymap.set("n", "yd", function()
 
 	vim.fn.setreg("+", table.concat(messages, "\n"))
 	vim.notify("All diagnostic messages copied to clipboard", vim.log.levels.INFO)
-end)
+end, {
+	desc = "Yank All Diagnostics in Buffer",
+})
+
+-- Copy all buffer to clipboard
+vim.keymap.set("n", "ya", function()
+	vim.cmd("%y +")
+	vim.notify("Yanked buffer", vim.log.levels.INFO)
+end, {
+	desc = "Yank Entire Buffer",
+})
 
 vim.keymap.set("n", "]d", function()
 	diagnostic_goto(true)
