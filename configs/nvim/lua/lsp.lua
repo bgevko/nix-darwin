@@ -116,7 +116,7 @@ return {
 			-- Custom LSP keymaps
 			local map = vim.keymap.set
 			local Snacks = require("snacks")
-			map("n", "<leader>cl", Snacks.picker.lsp_config, { desc = "LSP Configurations" })
+			map("n", "<leader>lsp", Snacks.picker.lsp_config, { desc = "LSP Configurations" })
 			map("n", "gd", vim.lsp.buf.definition, { desc = "Goto Definition" })
 			map("n", "gr", function()
 				Snacks.picker.lsp_references()
