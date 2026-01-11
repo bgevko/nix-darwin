@@ -30,7 +30,8 @@
     "configs/palettes" = "cd /Users/bgevko/nixos/configs/palettes";
     "configs/walls" = "cd /Users/bgevko/nixos/configs/walls";
     "configs/sketchybar" = "cd /Users/bgevko/nixos/configs/sketchybar";
-    bos2 = "cd ~/Projects/bogdan-os2/";
+    wos = "cd ~/Projects/web-os/";
+    bb = "cd ~/.backups/bos2";
 
     # Neovim
     nplug = "cd ~/nixos/configs/nvim/lua/plugins";

@@ -39,21 +39,21 @@ return {
 	keys = {
 		{ "<leader>sn", "", desc = "+noice" },
 		{
-			"<leader>uh",
+			"<leader>nh",
 			function()
 				require("noice").cmd("history")
 			end,
 			desc = "Noice History",
 		},
 		{
-			"<leader>ua",
+			"<leader>na",
 			function()
 				require("noice").cmd("all")
 			end,
 			desc = "Noice All",
 		},
 		{
-			"<leader>ud",
+			"<leader>nd",
 			function()
 				require("noice").cmd("dismiss")
 			end,

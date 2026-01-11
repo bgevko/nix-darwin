@@ -126,6 +126,8 @@ in
     git
     kitty
     fzf
+    grpcurl
+    websocat
     nodejs_24
     ast-grep
     luarocks
@@ -152,6 +154,7 @@ in
     docker-language-server
     yaml-language-server
     vscode-langservers-extracted
+    # NOTE: kulala-ls, install manually for now: pnpm add -g @mistweaverco/kulala-ls
 
     # formatters
     stylua
@@ -166,6 +169,8 @@ in
     dockfmt
     yamlfmt
     clang-tools
+    eslint_d
+    kulala-fmt
   ];
 
   homebrew = {
@@ -189,7 +194,6 @@ in
       "font-space-mono-nerd-font"
       "1password"
       "logi-options+"
-      "gimp"
       "losslesscut"
       "postman"
       "figma"

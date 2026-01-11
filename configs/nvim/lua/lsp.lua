@@ -1,15 +1,16 @@
 ---@diagnostic disable: undefined-global
 return {
 
-	---------------------------------------------------------------------------
-	-- TREESITTER
-	---------------------------------------------------------------------------
-	--- Parsers are installed automatically
+	--          ╭─────────────────────────────────────────────────────────╮
+	--          │                       TREESITTER                        │
+	--          ╰─────────────────────────────────────────────────────────╯
+	-- ─[ Parsers are installed automatically ]────────────────────────────
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
 		config = function()
 			require("nvim-treesitter.configs").setup({
+				ensure_installed = {},
 				auto_install = true,
 				highlight = {
 					enable = true,
@@ -26,9 +27,9 @@ return {
 		end,
 	},
 
-	---------------------------------------------------------------------------
-	-- LSPCONFIG
-	---------------------------------------------------------------------------
+	--          ╭─────────────────────────────────────────────────────────╮
+	--          │                        LSPCONFIG                        │
+	--          ╰─────────────────────────────────────────────────────────╯
 	{
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
@@ -76,6 +77,8 @@ return {
 				yamlls = {},
 				cssls = {},
 				gopls = {},
+				eslint = {},
+				-- kulala_ls = {},
 			}
 
 			-- 4. configure + warn + enable
@@ -132,9 +135,9 @@ return {
 		end,
 	},
 
-	---------------------------------------------------------------------------
-	-- BLINK CMP
-	---------------------------------------------------------------------------
+	--          ╭─────────────────────────────────────────────────────────╮
+	--          │                        BLINK CMP                        │
+	--          ╰─────────────────────────────────────────────────────────╯
 	{
 		"saghen/blink.cmp",
 		dependencies = {
@@ -164,9 +167,9 @@ return {
 		opts_extend = { "sources.default" },
 	},
 
-	-------------------------------------------------------------------------
-	-- FORMATTER → Conform
-	-------------------------------------------------------------------------
+	--          ╭─────────────────────────────────────────────────────────╮
+	--          │                   FORMATTER → Conform                   │
+	--          ╰─────────────────────────────────────────────────────────╯
 	{
 		"stevearc/conform.nvim",
 		config = function()
@@ -176,10 +179,10 @@ return {
 					sh = { "shfmt" },
 					bash = { "shfmt" },
 					python = { "isort", "black" },
-					javascript = { "prettierd", "prettier", stop_after_first = true },
-					javascriptreact = { "prettierd", "prettier", stop_after_first = true },
-					typescript = { "prettierd", "prettier", stop_after_first = true },
-					typescriptreact = { "prettierd", "prettier", stop_after_first = true },
+					javascript = { "eslint_d", "prettierd" },
+					javascriptreact = { "eslint_d", "prettierd" },
+					typescript = { "eslint_d", "prettierd" },
+					typescriptreact = { "eslint_d", "prettierd" },
 					nix = { "nixfmt" },
 					c = { "clang_format" },
 					cpp = { "clang_format" },
@@ -198,7 +201,7 @@ return {
 					scss = { "prettierd", "prettier", stop_after_first = true },
 					less = { "prettierd", "prettier", stop_after_first = true },
 					go = { "gofumpt", "gofmt", stop_after_first = true },
-
+					-- http = { "kulala_fmt" },
 					["_"] = { "trim_whitespace" },
 				},
 
@@ -208,6 +211,11 @@ return {
 						args = { "fmt", "-" },
 						stdin = true,
 					},
+					-- kulala_fmt = {
+					-- 	command = "kulala-fmt",
+					-- 	args = { "format", "$FILENAME" },
+					-- 	stdin = false,
+					-- },
 				},
 				format_on_save = {
 					lsp_fallback = true,
@@ -216,9 +224,9 @@ return {
 		end,
 	},
 
-	-------------------------------------------------------------------------
-	-- COPILOT BACKEND
-	-------------------------------------------------------------------------
+	--          ╭─────────────────────────────────────────────────────────╮
+	--          │                     COPILOT BACKEND                     │
+	--          ╰─────────────────────────────────────────────────────────╯
 	{
 		"zbirenbaum/copilot.lua",
 		config = function()

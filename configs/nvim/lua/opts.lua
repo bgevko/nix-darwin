@@ -12,22 +12,13 @@ vim.g.markdown_recommended_style = 0
 vim.opt.autowrite = true
 vim.opt.clipboard = "unnamedplus"
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
-vim.opt.conceallevel = 2
+vim.opt.conceallevel = 0
 vim.opt.confirm = true
 vim.opt.cursorline = true
 vim.opt.expandtab = true
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
 
--- vim.opt.fillchars = {
--- 	foldopen = "",
--- 	foldclose = "",
--- 	fold = " ",
--- 	foldsep = " ",
--- 	diff = "╱",
--- 	eob = " ",
--- }
--- vim.opt.foldlevel = 99
--- vim.opt.foldmethod = "indent"
--- vim.opt.foldtext = ""
 vim.opt.formatexpr = "v:lua.vim.lsp.formatexpr()"
 vim.opt.formatoptions = "jcroqlnt"
 vim.opt.grepformat = "%f:%l:%c:%m"
