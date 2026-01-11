@@ -4,20 +4,42 @@ return {
 	--          ╭─────────────────────────────────────────────────────────╮
 	--          │                       TREESITTER                        │
 	--          ╰─────────────────────────────────────────────────────────╯
-	-- ─[ Parsers are installed automatically ]────────────────────────────
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
 		config = function()
 			require("nvim-treesitter.configs").setup({
-				ensure_installed = {},
-				auto_install = true,
+				ensure_installed = {
+					"bash",
+					"c",
+					"cmake",
+					"cpp",
+					"css",
+					"dockerfile",
+					"go",
+					"html",
+					"javascript",
+					"json",
+					"jsonc",
+					"lua",
+					"markdown",
+					"nix",
+					"python",
+					"rust",
+					"scss",
+					"typescript",
+					"yaml",
+				},
+				auto_install = false,
 				highlight = {
 					enable = true,
 					disable = function(lang, buf)
-						local max = 100 * 1024 -- 100KB
+						local max = 100 * 1024
 						local ok, stat = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
 						if ok and stat and stat.size > max then
+							return true
+						end
+						if lang == "http" then
 							return true
 						end
 					end,
@@ -73,12 +95,10 @@ return {
 				tailwindcss = {},
 				jsonls = {},
 				marksman = {},
-				docker = {},
 				yamlls = {},
 				cssls = {},
 				gopls = {},
 				eslint = {},
-				-- kulala_ls = {},
 			}
 
 			-- 4. configure + warn + enable
@@ -195,13 +215,11 @@ return {
 					json = { "prettierd", "prettier", stop_after_first = true },
 					jsonc = { "prettierd", "prettier", stop_after_first = true },
 					markdown = { "prettierd", "prettier", stop_after_first = true },
-					dockerfile = { "dockfmt" },
 					yaml = { "yamlfmt" },
 					css = { "prettierd", "prettier", stop_after_first = true },
 					scss = { "prettierd", "prettier", stop_after_first = true },
 					less = { "prettierd", "prettier", stop_after_first = true },
 					go = { "gofumpt", "gofmt", stop_after_first = true },
-					-- http = { "kulala_fmt" },
 					["_"] = { "trim_whitespace" },
 				},
 
@@ -211,11 +229,6 @@ return {
 						args = { "fmt", "-" },
 						stdin = true,
 					},
-					-- kulala_fmt = {
-					-- 	command = "kulala-fmt",
-					-- 	args = { "format", "$FILENAME" },
-					-- 	stdin = false,
-					-- },
 				},
 				format_on_save = {
 					lsp_fallback = true,

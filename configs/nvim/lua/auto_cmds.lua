@@ -178,6 +178,9 @@ autocmd("BufWritePre", {
 -- ──────────────────────────────────────────────────────────────
 -- Notify when treesitter parser isn't installed
 -- ──────────────────────────────────────────────────────────────
+local ts_notify_ignore = {
+	http = true,
+}
 autocmd("FileType", {
 	group = treesitter_notify,
 	pattern = "*",
@@ -194,7 +197,7 @@ autocmd("FileType", {
 		vim.b[buf]._ts_missing_checked = true
 
 		local ft = vim.bo[buf].filetype
-		if not ft or ft == "" then
+		if not ft or ft == "" or ts_notify_ignore[ft] then
 			return
 		end
 
