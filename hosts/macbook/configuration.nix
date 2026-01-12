@@ -37,15 +37,15 @@ in
       KeyRepeat = 2;
       ApplePressAndHoldEnabled = false;
     };
-    dock = {
-      persistent-apps = [
-        { app = "/Applications/Raycast.app"; }
-        { app = "/Applications/Leader Key.app"; }
-        { app = "/Applications/AeroSpace.app/"; }
-        { app = "/Applications/Nix Apps/kitty.app/"; }
-        { app = "/Applications/Brave Browser.app/"; }
-      ];
-    };
+    # dock = {
+    #   persistent-apps = [
+    #     { app = "/Applications/Raycast.app"; }
+    #     { app = "/Applications/Leader Key.app"; }
+    #     { app = "/Applications/AeroSpace.app/"; }
+    #     { app = "/Applications/Nix Apps/kitty.app/"; }
+    #     { app = "/Applications/Brave Browser.app/"; }
+    #   ];
+    # };
   };
 
   # Launchd services

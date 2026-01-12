@@ -12,7 +12,6 @@ in
 {
   imports = [
     ./modules/terminal/terminal.nix
-    ./modules/auth.nix
     inputs.stylix.homeModules.stylix # ← add this
   ];
   home.username = "bgevko";
@@ -85,9 +84,7 @@ in
     "${config.home.homeDirectory}/.local/share/pnpm"
   ];
   home.sessionVariables = {
-    SOPS_AGE_KEY_FILE = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
     PNPM_HOME = "${config.home.homeDirectory}/.local/share/pnpm";
-
   };
 
   programs.home-manager.enable = true;
