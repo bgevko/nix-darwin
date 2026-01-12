@@ -172,7 +172,6 @@ in
   homebrew = {
     enable = true;
     brews = [
-      "borders"
       "sketchybar"
       "jq"
       "gs"
