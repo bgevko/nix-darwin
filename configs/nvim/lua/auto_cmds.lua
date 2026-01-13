@@ -175,50 +175,6 @@ autocmd("BufWritePre", {
 	end,
 })
 
--- ──────────────────────────────────────────────────────────────
--- Notify when treesitter parser isn't installed
--- ──────────────────────────────────────────────────────────────
-local ts_notify_ignore = {
-	http = true,
-}
-autocmd("FileType", {
-	group = treesitter_notify,
-	pattern = "*",
-	callback = function(event)
-		local buf = event.buf
-		-- only check normal, listed file buffers (skip nofile/help/quickfix/notify/etc)
-		if vim.bo[buf].buftype ~= "" or vim.bo[buf].buflisted == false then
-			return
-		end
-		-- avoid repeating per buffer
-		if vim.b[buf]._ts_missing_checked then
-			return
-		end
-		vim.b[buf]._ts_missing_checked = true
-
-		local ft = vim.bo[buf].filetype
-		if not ft or ft == "" or ts_notify_ignore[ft] then
-			return
-		end
-
-		local has = false
-		local ok_parsers, parsers = pcall(require, "nvim-treesitter.parsers")
-		if ok_parsers then
-			local lang = parsers.ft_to_lang(ft)
-			has = parsers.has_parser(lang)
-		else
-			local lang = (vim.treesitter.language.get_lang and vim.treesitter.language.get_lang(ft)) or ft
-			has = pcall(vim.treesitter.get_parser, buf, lang)
-		end
-
-		if not has then
-			vim.schedule(function()
-				vim.notify("No Tree-sitter parser for filetype: " .. ft, vim.log.levels.WARN, { title = "Tree-sitter" })
-			end)
-		end
-	end,
-})
-
 --Format on save (respects global autoformat toggle)
 autocmd("BufWritePre", {
 	pattern = "*",

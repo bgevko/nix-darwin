@@ -171,29 +171,29 @@ in
 
   homebrew = {
     enable = true;
-    # brews = [
-    #   "borders"
-    #   "sketchybar"
-    #   "jq"
-    #   "gs"
-    #   "neovim"
-    # ];
-    # taps = [
-    #   "nikitabobko/tap"
-    #   "FelixKratz/formulae"
-    # ];
-    # casks = [
-    #   "nikitabobko/tap/aerospace"
-    #   "leader-key"
-    #   "raycast"
-    #   "brave-browser"
-    #   "font-space-mono-nerd-font"
-    #   "1password"
-    #   "logi-options+"
-    #   "losslesscut"
-    #   "postman"
-    #   "figma"
-    # ];
+    brews = [
+       "borders"
+       "sketchybar"
+       "jq"
+       "gs"
+       "neovim"
+     ];
+     taps = [
+       "nikitabobko/tap"
+       "FelixKratz/formulae"
+     ];
+     casks = [
+       "nikitabobko/tap/aerospace"
+       "leader-key"
+       "raycast"
+       "brave-browser"
+       "font-space-mono-nerd-font"
+       "1password"
+       "logi-options+"
+       "losslesscut"
+       "postman"
+       "figma"
+     ];
     onActivation.cleanup = "zap";
     onActivation.autoUpdate = true;
     onActivation.upgrade = true;
