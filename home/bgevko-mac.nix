@@ -82,6 +82,8 @@ in
   home.sessionPath = [
     "/opt/homebrew/bin"
     "/opt/homebrew/sbin"
+    "/usr/local/clamav/bin"
+    "/usr/local/clamav/sbin"
     "${config.home.homeDirectory}/.local/share/pnpm"
   ];
   home.sessionVariables = {

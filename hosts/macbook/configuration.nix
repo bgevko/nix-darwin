@@ -194,7 +194,7 @@ in
       "postman"
       "figma"
     ];
-    onActivation.cleanup = "zap";
+    onActivation.cleanup = "false";
     onActivation.autoUpdate = true;
     onActivation.upgrade = true;
   };
