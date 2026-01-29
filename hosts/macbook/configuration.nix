@@ -26,7 +26,7 @@ in
     nerd-fonts.fira-code
   ];
 
-  system.defaults.".GlobalPreferences"."com.apple.mouse.scaling" = 2.0;
+  system.defaults.".GlobalPreferences"."com.apple.mouse.scaling" = 3.0;
 
   # System defaults
   system.defaults = {
@@ -171,30 +171,34 @@ in
 
   homebrew = {
     enable = true;
+    taps = [
+      "nikitabobko/tap"
+      "FelixKratz/formulae"
+      "hashicorp/tap"
+    ];
     brews = [
-       "borders"
-       "sketchybar"
-       "jq"
-       "gs"
-       "neovim"
-     ];
-     taps = [
-       "nikitabobko/tap"
-       "FelixKratz/formulae"
-     ];
-     casks = [
-       "nikitabobko/tap/aerospace"
-       "leader-key"
-       "raycast"
-       "brave-browser"
-       "font-space-mono-nerd-font"
-       "1password"
-       "logi-options+"
-       "losslesscut"
-       "postman"
-       "figma"
-     ];
-    onActivation.cleanup = "zap";
+      "borders"
+      "sketchybar"
+      "jq"
+      "gs"
+      "neovim"
+      "fnm"
+      "hashicorp/tap/vault"
+      "direnv"
+      "git-lfs"
+    ];
+    casks = [
+      "nikitabobko/tap/aerospace"
+      "leader-key"
+      "raycast"
+      "brave-browser"
+      "font-space-mono-nerd-font"
+      "1password"
+      "losslesscut"
+      "postman"
+      "figma"
+    ];
+    onActivation.cleanup = "none";
     onActivation.autoUpdate = true;
     onActivation.upgrade = true;
   };

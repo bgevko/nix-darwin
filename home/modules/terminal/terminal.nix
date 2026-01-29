@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   ...
 }:
@@ -8,8 +9,13 @@
   ];
   programs.fish = {
     enable = true;
-    interactiveShellInit = '''';
+    interactiveShellInit = ''
+      if test -f "${config.home.homeDirectory}/.work_profile.fish"
+        source "${config.home.homeDirectory}/.work_profile.fish"
+      end
+    '';
   };
+
   programs.starship = {
     enable = true;
     settings = pkgs.lib.importTOML ./starship.toml;

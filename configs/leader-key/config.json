@@ -141,6 +141,12 @@
           "label" : "Nix Search",
           "type" : "url",
           "value" : "https://search.nixos.org/packages"
+        },
+        {
+          "key" : "j",
+          "label" : "WebCats Jira",
+          "type" : "url",
+          "value" : "https://gbujira.oraclecorp.com/secure/RapidBoard.jspa?rapidView=48664"
         }
       ],
       "iconPath" : "globe",

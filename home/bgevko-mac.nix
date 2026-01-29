@@ -82,6 +82,8 @@ in
     "/opt/homebrew/bin"
     "/opt/homebrew/sbin"
     "${config.home.homeDirectory}/.local/share/pnpm"
+    "/usr/local/mysql-8.0.39-macos14-arm64/bin"
+    "/usr/local/mysql/support-files/"
   ];
   home.sessionVariables = {
     PNPM_HOME = "${config.home.homeDirectory}/.local/share/pnpm";

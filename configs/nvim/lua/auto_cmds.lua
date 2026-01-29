@@ -186,6 +186,13 @@ autocmd("BufWritePre", {
 	end,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "*",
+	callback = function(args)
+		pcall(vim.treesitter.start, args.buf)
+	end,
+})
+
 -- Open dashboard when no files are specified
 -- NOTE: Strange highlighting bug when this is enabled. Turning off for later debugging.
 -- autocmd("VimEnter", {

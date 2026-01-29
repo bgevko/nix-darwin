@@ -3,9 +3,6 @@
 
 # You can use it to add commands that run after AeroSpace startup.
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
-after-startup-command = [
-  'exec-and-forget brew services start borders'
-]
 
 # Start AeroSpace at login
 start-at-login = true
@@ -32,7 +29,7 @@ default-root-container-orientation = 'auto'
 # See https://nikitabobko.github.io/AeroSpace/guide#on-focus-changed-callbacks
 # See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
 # Fallback value (if you omit the key): on-focused-monitor-changed = []
-on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+# on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 
 # Focuses mouse on the newly focused window
 # on-focus-changed = ['move-mouse window-lazy-center']
