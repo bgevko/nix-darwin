@@ -175,7 +175,7 @@ autocmd("BufWritePre", {
 	end,
 })
 
---Format on save (respects global autoformat toggle)
+-- Format on save (respects global autoformat toggle)
 autocmd("BufWritePre", {
 	pattern = "*",
 	callback = function(args)

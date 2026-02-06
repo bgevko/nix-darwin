@@ -190,10 +190,10 @@ return {
 					sh = { "shfmt" },
 					bash = { "shfmt" },
 					python = { "isort", "black" },
-					javascript = { "eslint_d", "prettierd" },
-					javascriptreact = { "eslint_d", "prettierd" },
-					typescript = { "eslint_d", "prettierd" },
-					typescriptreact = { "eslint_d", "prettierd" },
+					javascript = { "eslint_d" },
+					javascriptreact = { "eslint_d" },
+					typescript = { "prettierd" },
+					typescriptreact = { "prettierd" },
 					nix = { "nixfmt" },
 					c = { "clang_format" },
 					cpp = { "clang_format" },
@@ -221,9 +221,9 @@ return {
 						stdin = true,
 					},
 				},
-				format_on_save = {
-					lsp_fallback = true,
-				},
+				-- format_on_save = {
+				-- 	lsp_fallback = true,
+				-- },
 			})
 		end,
 	},

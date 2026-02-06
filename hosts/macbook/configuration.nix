@@ -138,6 +138,7 @@ in
     home-manager
     openssh
     qutebrowser
+    python3
 
     # LSPs
     lua-language-server
@@ -186,6 +187,8 @@ in
       "hashicorp/tap/vault"
       "direnv"
       "git-lfs"
+      "cloc"
+      "eslint_d"
     ];
     casks = [
       "nikitabobko/tap/aerospace"
@@ -197,6 +200,7 @@ in
       "losslesscut"
       "postman"
       "figma"
+      "codex"
     ];
     onActivation.cleanup = "none";
     onActivation.autoUpdate = true;

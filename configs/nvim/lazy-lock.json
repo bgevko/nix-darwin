@@ -5,6 +5,7 @@
   "comment-box.nvim": { "branch": "main", "commit": "06bb771690bc9df0763d14769b779062d8f12bc5" },
   "conflict-marker.vim": { "branch": "master", "commit": "62742b2ffe7a433988759c67b5c5a22eff74a14b" },
   "conform.nvim": { "branch": "master", "commit": "238f542a118984a88124fc915d5b981680418707" },
+  "copilot.lua": { "branch": "master", "commit": "9b8d77c6c847c83c784c05f5f86b4821ed90d3a1" },
   "dracula.nvim": { "branch": "main", "commit": "ae752c13e95fb7c5f58da4b5123cb804ea7568ee" },
   "everforest-nvim": { "branch": "main", "commit": "557bce922401e247a596583679bc181d4d688554" },
   "flash.nvim": { "branch": "main", "commit": "fcea7ff883235d9024dc41e638f164a450c14ca2" },
