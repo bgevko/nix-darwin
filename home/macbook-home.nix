@@ -20,6 +20,11 @@ in
         source "${dotfiles}/profiles/home.fish"
       end
     '';
+
+    shellAbbrs = {
+      hm = "nvim ${nixDir}/home/home.nix";
+      conf = "nvim ${nixDir}/hosts/macbook-home/configuration.nix";
+    };
   };
 
   home.sessionVariables = {
