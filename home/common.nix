@@ -5,7 +5,8 @@
   ...
 }:
 let
-  dotfiles = "${config.home.homeDirectory}/nixos/configs";
+  nixDir = "${config.home.homeDirectory}/nixos";
+  dotfiles = "${nixDir}/configs";
   app_support = "Library/Application Support";
   symlink = config.lib.file.mkOutOfStoreSymlink;
 in
@@ -13,18 +14,15 @@ in
   imports = [
     ./modules/terminal/terminal.nix
     ./modules/auth.nix
-    inputs.stylix.homeModules.stylix # ← add this
+    inputs.stylix.homeModules.stylix
   ];
+
   home.username = "bgevko";
   home.homeDirectory = "/Users/bgevko";
   home.stateVersion = "25.05";
 
-  # Packages managed globally for now, in configuration.nix
-  # home.packages = with pkgs; [];
-
   stylix = {
     enable = true;
-    # base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest";
     base16Scheme = {
       base00 = "#2d353b";
       base01 = "#343f44";
@@ -44,6 +42,7 @@ in
       base0F = "#b2b8b4";
     };
   };
+
   programs.bat.enable = true;
 
   xdg.configFile = {
@@ -65,11 +64,13 @@ in
     "/usr/local/clamav/sbin"
     "${config.home.homeDirectory}/.local/share/pnpm"
     "${config.home.homeDirectory}/.local/bin"
+    "${nixDir}/bin"
   ];
+
   home.sessionVariables = {
+    NIX_DIR = nixDir;
     SOPS_AGE_KEY_FILE = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
     PNPM_HOME = "${config.home.homeDirectory}/.local/share/pnpm";
-
   };
 
   programs.home-manager.enable = true;

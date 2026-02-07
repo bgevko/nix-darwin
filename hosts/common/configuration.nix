@@ -1,0 +1,158 @@
+{ self, pkgs, ... }:
+
+let
+  user = "bgevko";
+  home = "/Users/${user}";
+in
+{
+  nix.settings.experimental-features = "nix-command flakes";
+
+  system.configurationRevision = self.rev or self.dirtyRev or null;
+
+  # Used for backwards compatibility, please read the changelog before changing.
+  system.stateVersion = 6;
+
+  system.primaryUser = user;
+
+  users.users.${user} = {
+    name = user;
+    home = home;
+  };
+
+  nixpkgs.config.allowUnfree = true;
+
+  programs.fish.enable = true;
+
+  fonts.packages = with pkgs; [
+    nerd-fonts.fira-code
+  ];
+
+  system.defaults.".GlobalPreferences"."com.apple.mouse.scaling" = 2.0;
+
+  system.defaults = {
+    NSGlobalDomain = {
+      "com.apple.trackpad.scaling" = 3.0;
+      InitialKeyRepeat = 10;
+      KeyRepeat = 2;
+      ApplePressAndHoldEnabled = false;
+    };
+  };
+
+  # Packages / programs (global)
+  environment.systemPackages = with pkgs; [
+    # shells + core CLI
+    zsh
+    fish
+    git
+    openssh
+    curl
+    curl.dev
+
+    # navigation / search
+    ripgrep
+    fd
+    fzf
+    tree
+    trash-cli
+
+    # build / system tooling
+    cmake
+    pkg-config
+    gcc
+
+    # dev tooling / runtimes
+    nodejs_24
+    pnpm
+    lua
+    luarocks
+    tree-sitter
+    go
+    gopls
+    gofumpt
+    golangci-lint
+    delve
+    rustup
+
+    # utilities
+    lazygit
+    age
+    sops
+    ast-grep
+    imagemagick
+    mermaid-cli
+    tectonic
+    pokemon-colorscripts-mac
+    base16-schemes
+
+    # GUI apps (nix-managed)
+    _1password-gui
+    qutebrowser
+    kitty
+
+    # LSPs
+    lua-language-server
+    bash-language-server
+    nixd
+    pyright
+    typescript-language-server
+    cmake-language-server
+    tailwindcss-language-server
+    vscode-json-languageserver
+    marksman
+    docker-language-server
+    yaml-language-server
+    vscode-langservers-extracted
+
+    # formatters / linters
+    stylua
+    shfmt
+    isort
+    black
+    prettier
+    prettierd
+    nixfmt
+    cmake-format
+    rustfmt
+    dockfmt
+    yamlfmt
+    clang-tools
+
+    home-manager
+  ];
+
+  homebrew = {
+    enable = true;
+
+    taps = [
+      "nikitabobko/tap"
+      "FelixKratz/formulae"
+    ];
+
+    brews = [
+      "borders"
+      "sketchybar"
+      "jq"
+      "gs"
+      "neovim"
+      "direnv"
+      "cloc"
+      "eslint_d"
+    ];
+
+    casks = [
+      "nikitabobko/tap/aerospace"
+      "leader-key"
+      "raycast"
+      "brave-browser"
+      "font-space-mono-nerd-font"
+      "1password"
+      "losslesscut"
+      "postman"
+      "figma"
+    ];
+
+    onActivation.cleanup = "none";
+    onActivation.autoUpdate = true;
+    onActivation.upgrade = true;
+  };
+}

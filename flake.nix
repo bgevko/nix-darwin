@@ -1,13 +1,5 @@
 {
   description = "nix-darwin + Home Manager config";
-
-  nixConfig = {
-    extra-substituters = [
-      "https://cache.soopy.moe"
-    ];
-    extra-trusted-public-keys = [ "cache.soopy.moe-1:0RZVsQeR+GOh0VQI9rvnHz55nVXkFardDqfm4+afjPo=" ];
-  };
-
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin = {
@@ -37,9 +29,30 @@
       ...
     }:
     let
-      host = "Bogdans-MacBook-Pro";
       user = "bgevko";
       system = "x86_64-darwin";
+      mkDarwinHost =
+        host: hostModulePath: homeModulePath:
+        nix-darwin.lib.darwinSystem {
+          inherit system;
+
+          modules = [
+            hostModulePath
+            stylix.darwinModules.stylix
+            home-manager.darwinModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = false;
+                useUserPackages = true;
+                extraSpecialArgs = { inherit inputs; };
+                users.${user} = import homeModulePath;
+                backupFileExtension = "backup";
+              };
+            }
+          ];
+
+          specialArgs = { inherit self inputs; };
+        };
     in
     {
       # Shared HM modules
@@ -47,27 +60,14 @@
         sops-nix.homeModules.sops
       ];
 
-      darwinConfigurations.${host} = nix-darwin.lib.darwinSystem {
-        inherit system;
-
-        modules = [
-          ./hosts/macbook-home/configuration.nix
-          stylix.darwinModules.stylix
-          home-manager.darwinModules.home-manager
-
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-
-              extraSpecialArgs = { inherit inputs; };
-              users.${user} = import ./home/${user}-mac.nix;
-
-              backupFileExtension = "backup";
-            };
-          }
-        ];
-        specialArgs = { inherit self inputs; };
+      # Hosts
+      darwinConfigurations = {
+        "macbook-home" =
+          mkDarwinHost "macbook-home" ./hosts/macbook-home/configuration.nix
+            ./home/macbook-home.nix;
+        "macbook-work" =
+          mkDarwinHost "macbook-work" ./hosts/macbook-work/configuration.nix
+            ./home/macbook-work.nix;
       };
     };
 }

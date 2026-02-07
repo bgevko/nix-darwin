@@ -9,9 +9,6 @@
     logout = "osascript -e 'tell application \"System Events\" to log out'";
     reboot = "osascript -e 'tell application \"System Events\" to restart'";
 
-    # NixOS / Darwin
-    rebuild = "sudo darwin-rebuild switch --flake /Users/bgevko/nixos#Bogdans-MacBook-Pro";
-
     # Edit configs
     kittyconf = "nvim /Users/bgevko/nixos/configs/kitty/kitty.conf";
     aero = "nvim ~/nixos/configs/aerospace/aerospace.toml";

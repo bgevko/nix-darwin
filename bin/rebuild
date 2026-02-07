@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+FLAKE_ROOT="/Users/bgevko/nixos"
+HOST="$(scutil --get LocalHostName 2>/dev/null || hostname -s)"
+
+case "$HOST" in
+"Bogdans-MacBook-Pro-2")
+  TARGET="macbook-work"
+  ;;
+"Bogdans-MacBook-Pro")
+  TARGET="macbook-home"
+  ;;
+*)
+  echo "error: unknown host '$HOST'" >&2
+  echo "expected one of:" >&2
+  echo "  Bogdans-MacBook-Pro" >&2
+  echo "  Bogdans-MacBook-Pro-2" >&2
+  exit 1
+  ;;
+esac
+
+exec sudo darwin-rebuild switch --flake "${FLAKE_ROOT}#${TARGET}" "$@"
