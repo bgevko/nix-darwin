@@ -1,5 +1,6 @@
 # Paths
 fish_add_path ~/.local/bin
+fish_add_path ~/nixos/bin
 fish_add_path "$(go env GOPATH)/bin"
 
 # Direnv
