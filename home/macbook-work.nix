@@ -1,15 +1,26 @@
+# work-only overrides
 {
   config,
   ...
 }:
 let
   nixDir = config.home.sessionVariables.NIX_DIR;
+  dotfiles = config.home.sessionVariables.NIX_DOTFILES;
 in
 {
   imports = [ ./common.nix ];
 
-  # work-only overrides
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = ''
+      if test -f "${dotfiles}/profiles/work.fish"
+        source "${dotfiles}/profiles/work.fish"
+      end
+    '';
+  };
+
   home.sessionPath = [
-    "${nixDir}/configs/profiles/work.fish"
+    "/usr/local/mysql-8.0.39-macos14-arm64/bin"
+    "/usr/local/mysql/support-files/"
   ];
 }

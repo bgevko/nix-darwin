@@ -13,7 +13,6 @@ in
 {
   imports = [
     ./modules/terminal/terminal.nix
-    ./modules/auth.nix
     inputs.stylix.homeModules.stylix
   ];
 
@@ -69,7 +68,7 @@ in
 
   home.sessionVariables = {
     NIX_DIR = nixDir;
-    SOPS_AGE_KEY_FILE = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
+    NIX_DOTFILES = dotfiles;
     PNPM_HOME = "${config.home.homeDirectory}/.local/share/pnpm";
   };
 

@@ -1,15 +1,31 @@
+# home-only overrides
 {
   config,
   ...
 }:
 let
   nixDir = config.home.sessionVariables.NIX_DIR;
+  dotfiles = config.home.sessionVariables.NIX_DOTFILES;
 in
 {
-  imports = [ ./common.nix ];
+  imports = [
+    ./common.nix
+    ./modules/auth.nix
+  ];
 
-  # home-only overrides
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = ''
+      if test -f "${dotfiles}/profiles/home.fish"
+        source "${dotfiles}/profiles/home.fish"
+      end
+    '';
+  };
+
+  home.sessionVariables = {
+    SOPS_AGE_KEY_FILE = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
+  };
+
   home.sessionPath = [
-    "${nixDir}/configs/profiles/home.fish"
   ];
 }

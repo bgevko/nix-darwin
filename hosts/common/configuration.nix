@@ -3,22 +3,21 @@
 let
   user = "bgevko";
   home = "/Users/${user}";
+  defaultWallpaper = "${home}/nixos/configs/walls/wall4-adj.png";
 in
 {
+  nixpkgs.hostPlatform = "aarch64-darwin";
   nix.settings.experimental-features = "nix-command flakes";
-
   system.configurationRevision = self.rev or self.dirtyRev or null;
 
   # Used for backwards compatibility, please read the changelog before changing.
   system.stateVersion = 6;
 
   system.primaryUser = user;
-
   users.users.${user} = {
     name = user;
     home = home;
   };
-
   nixpkgs.config.allowUnfree = true;
 
   programs.fish.enable = true;
@@ -27,7 +26,7 @@ in
     nerd-fonts.fira-code
   ];
 
-  system.defaults.".GlobalPreferences"."com.apple.mouse.scaling" = 2.0;
+  system.defaults.".GlobalPreferences"."com.apple.mouse.scaling" = 3.0;
 
   system.defaults = {
     NSGlobalDomain = {
@@ -35,6 +34,65 @@ in
       InitialKeyRepeat = 10;
       KeyRepeat = 2;
       ApplePressAndHoldEnabled = false;
+    };
+  };
+
+  # Shared Launchd services
+  launchd.user.agents = {
+    setWallpaper = {
+      serviceConfig = {
+        Label = "setWallpaper";
+        ProgramArguments = [
+          "/usr/bin/osascript"
+          "-e"
+          ''tell application "System Events" to set picture of every desktop to "${defaultWallpaper}"''
+        ];
+        RunAtLoad = true;
+        KeepAlive = false;
+      };
+    };
+    raycast.serviceConfig = {
+      Label = "com.raycast.launcher";
+      ProgramArguments = [
+        "/usr/bin/open"
+        "-a"
+        "/Applications/Raycast.app"
+      ];
+      RunAtLoad = true;
+      KeepAlive = false;
+    };
+
+    leaderkey.serviceConfig = {
+      Label = "com.leaderkey.launcher";
+      ProgramArguments = [
+        "/usr/bin/open"
+        "-a"
+        "/Applications/Leader Key.app"
+      ];
+      RunAtLoad = true;
+      KeepAlive = false;
+    };
+
+    aerospace.serviceConfig = {
+      Label = "com.aerospace.launcher";
+      ProgramArguments = [
+        "/usr/bin/open"
+        "-a"
+        "/Applications/AeroSpace.app"
+      ];
+      RunAtLoad = true;
+      KeepAlive = false;
+    };
+
+    ssh_add.serviceConfig = {
+      Label = "com.user.ssh_add";
+      ProgramArguments = [
+        "/usr/bin/ssh-add"
+        "--apple-use-keychain"
+        "$~/.ssh/ssh-github-personal"
+      ];
+      RunAtLoad = true;
+      KeepAlive = false;
     };
   };
 

@@ -14,7 +14,9 @@
     aero = "nvim ~/nixos/configs/aerospace/aerospace.toml";
     auth = "nvim ~/nixos/home/modules/auth.nix";
     lkey = "nvim ~/nixos/configs/leader-key.json";
-    conf = "nvim /Users/bgevko/nixos/hosts/macbook-home/configuration.nix";
+    confh = "nvim /Users/bgevko/nixos/hosts/macbook-home/configuration.nix";
+    confw = "nvim /Users/bgevko/nixos/hosts/macbook-work/configuration.nix";
+    confc = "nvim /Users/bgevko/nixos/hosts/common/configuration.nix";
     hm = "nvim /Users/bgevko/nixos/home/bgevko-mac.nix";
 
     # CD Into ..
@@ -26,10 +28,6 @@
     "configs/palettes" = "cd /Users/bgevko/nixos/configs/palettes";
     "configs/walls" = "cd /Users/bgevko/nixos/configs/walls";
     "configs/sketchybar" = "cd /Users/bgevko/nixos/configs/sketchybar";
-    wos = "cd ~/Projects/web-os/";
-    vfs = "cd ~/Projects/web-os/vfs/";
-    term = "cd ~/Projects/web-os/vfs/apps/terminal/";
-    bb = "cd ~/.backups/bos2";
 
     # Neovim
     nplug = "cd ~/nixos/configs/nvim/lua/plugins";

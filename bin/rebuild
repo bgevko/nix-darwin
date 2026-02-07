@@ -20,4 +20,7 @@ case "$HOST" in
   ;;
 esac
 
-exec sudo darwin-rebuild switch --flake "${FLAKE_ROOT}#${TARGET}" "$@"
+CMD=(sudo darwin-rebuild switch --flake "${FLAKE_ROOT}#${TARGET}" "$@")
+
+echo "→ ${CMD[*]}"
+exec "${CMD[@]}"
