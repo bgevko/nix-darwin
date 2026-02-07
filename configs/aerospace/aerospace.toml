@@ -3,9 +3,9 @@
 
 # You can use it to add commands that run after AeroSpace startup.
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
-after-startup-command = [
-  'exec-and-forget brew services start borders'
-]
+# after-startup-command = [
+#   'exec-and-forget brew services start borders'
+# ]
 
 # Start AeroSpace at login
 start-at-login = true

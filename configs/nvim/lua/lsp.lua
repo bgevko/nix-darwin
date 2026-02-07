@@ -199,7 +199,7 @@ return {
 					sh = { "shfmt" },
 					bash = { "shfmt" },
 					python = { "isort", "black" },
-					javascript = { "eslint_d", "prettierd" },
+					javascript = { "prettierd" },
 					javascriptreact = { "eslint_d", "prettierd" },
 					typescript = { "prettierd" },
 					typescriptreact = { "prettierd" },

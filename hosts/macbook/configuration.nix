@@ -138,6 +138,10 @@ in
     home-manager
     openssh
     qutebrowser
+    cmake
+    curl
+    curl.dev
+    pkg-config
 
     # LSPs
     lua-language-server
@@ -194,7 +198,7 @@ in
       "postman"
       "figma"
     ];
-    onActivation.cleanup = "false";
+    onActivation.cleanup = "zap";
     onActivation.autoUpdate = true;
     onActivation.upgrade = true;
   };

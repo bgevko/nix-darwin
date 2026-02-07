@@ -85,6 +85,7 @@ in
     "/usr/local/clamav/bin"
     "/usr/local/clamav/sbin"
     "${config.home.homeDirectory}/.local/share/pnpm"
+    "${config.home.homeDirectory}/.local/bin"
   ];
   home.sessionVariables = {
     SOPS_AGE_KEY_FILE = "${config.home.homeDirectory}/.config/sops/age/keys.txt";

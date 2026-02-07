@@ -31,7 +31,7 @@
     "configs/sketchybar" = "cd /Users/bgevko/nixos/configs/sketchybar";
     wos = "cd ~/Projects/web-os/";
     vfs = "cd ~/Projects/web-os/vfs/";
-    term = "nvim ~/Projects/terminal-emulator/";
+    term = "cd ~/Projects/web-os/vfs/apps/terminal/";
     bb = "cd ~/.backups/bos2";
 
     # Neovim
