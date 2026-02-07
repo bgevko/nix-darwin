@@ -1,5 +1,6 @@
 {
-  description = "Example nix-darwin system flake";
+  description = "nix-darwin + Home Manager config";
+
   nixConfig = {
     extra-substituters = [
       "https://cache.soopy.moe"
@@ -13,10 +14,6 @@
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -25,32 +22,47 @@
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     inputs@{
       self,
       nix-darwin,
-      nixpkgs,
-      stylix,
       home-manager,
+      stylix,
+      sops-nix,
       ...
     }:
+    let
+      host = "Bogdans-MacBook-Pro";
+      user = "bgevko";
+      system = "x86_64-darwin";
+    in
     {
+      # Shared HM modules
       home-manager.sharedModules = [
-        inputs.sops-nix.homeModules.sops
+        sops-nix.homeModules.sops
       ];
-      darwinConfigurations."Bogdans-MacBook-Pro" = nix-darwin.lib.darwinSystem {
-        system = "x86_64-darwin";
+
+      darwinConfigurations.${host} = nix-darwin.lib.darwinSystem {
+        inherit system;
+
         modules = [
           ./hosts/macbook/configuration.nix
           stylix.darwinModules.stylix
           home-manager.darwinModules.home-manager
+
           {
             home-manager = {
-              useGlobalPkgs = false;
+              useGlobalPkgs = true;
               useUserPackages = true;
+
               extraSpecialArgs = { inherit inputs; };
-              users.bgevko = import ./home/bgevko-mac.nix;
+              users.${user} = import ./home/${user}-mac.nix;
+
               backupFileExtension = "backup";
             };
           }

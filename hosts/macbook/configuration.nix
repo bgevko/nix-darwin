@@ -20,6 +20,7 @@ in
     home = home;
   };
 
+  nixpkgs.config.alzlowUnfree = true;
   nixpkgs.config.allowUnfree = true;
 
   fonts.packages = with pkgs; [
@@ -120,28 +121,54 @@ in
 
   # Packages / programs
   environment.systemPackages = with pkgs; [
+    # shells + core CLI
     zsh
     fish
-    ripgrep
     git
-    kitty
-    fzf
-    nodejs_24
-    ast-grep
-    luarocks
-    lua
-    tree-sitter
-    tectonic
-    fd
-    imagemagick
-    mermaid-cli
-    home-manager
     openssh
-    qutebrowser
-    cmake
     curl
     curl.dev
+
+    # navigation / search
+    ripgrep
+    fd
+    fzf
+    tree
+    trash-cli
+
+    # build / system tooling
+    cmake
     pkg-config
+    gcc
+
+    # dev tooling / runtimes
+    nodejs_24
+    pnpm
+    lua
+    luarocks
+    tree-sitter
+    go
+    gopls
+    gofumpt
+    golangci-lint
+    delve
+    rustup
+
+    # utilities
+    lazygit
+    age
+    sops
+    ast-grep
+    imagemagick
+    mermaid-cli
+    tectonic
+    pokemon-colorscripts-mac
+    base16-schemes
+
+    # GUI apps (nix-managed)
+    _1password-gui
+    qutebrowser
+    kitty
 
     # LSPs
     lua-language-server
@@ -157,7 +184,7 @@ in
     yaml-language-server
     vscode-langservers-extracted
 
-    # formatters
+    # formatters / linters
     stylua
     shfmt
     isort
@@ -170,35 +197,54 @@ in
     dockfmt
     yamlfmt
     clang-tools
+
+    # HM CLI (optional, but you had it before)
+    home-manager
   ];
 
   homebrew = {
     enable = true;
+
     taps = [
       "nikitabobko/tap"
       "FelixKratz/formulae"
     ];
+
     brews = [
+      # UI / WM bits
       "borders"
       "sketchybar"
+
+      # CLI utilities
       "jq"
       "gs"
-      "neovim"
       "direnv"
       "cloc"
       "eslint_d"
+
+      # editor
+      "neovim"
     ];
+
     casks = [
+      # window manager / launchers
       "nikitabobko/tap/aerospace"
       "leader-key"
       "raycast"
+
+      # browsers
       "brave-browser"
+
+      # fonts
       "font-space-mono-nerd-font"
+
+      # apps
       "1password"
       "losslesscut"
       "postman"
       "figma"
     ];
+
     onActivation.cleanup = "none";
     onActivation.autoUpdate = true;
     onActivation.upgrade = true;

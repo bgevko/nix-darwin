@@ -18,30 +18,9 @@ in
   home.username = "bgevko";
   home.homeDirectory = "/Users/bgevko";
   home.stateVersion = "25.05";
-  nixpkgs.config.allowUnfree = true;
 
-  home.packages = with pkgs; [
-    lazygit
-    age
-    _1password-gui
-    sops
-    tree
-    gcc
-    trash-cli
-    base16-schemes
-    pokemon-colorscripts-mac
-    pnpm
-
-    # rust
-    rustup
-
-    # go
-    go
-    gopls
-    gofumpt
-    golangci-lint
-    delve
-  ];
+  # Packages managed globally for now, in configuration.nix
+  # home.packages = with pkgs; [];
 
   stylix = {
     enable = true;
