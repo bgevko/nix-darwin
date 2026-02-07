@@ -170,21 +170,23 @@ in
     dockfmt
     yamlfmt
     clang-tools
-    eslint_d
   ];
 
   homebrew = {
     enable = true;
+    taps = [
+      "nikitabobko/tap"
+      "FelixKratz/formulae"
+    ];
     brews = [
       "borders"
       "sketchybar"
       "jq"
       "gs"
       "neovim"
-    ];
-    taps = [
-      "nikitabobko/tap"
-      "FelixKratz/formulae"
+      "direnv"
+      "cloc"
+      "eslint_d"
     ];
     casks = [
       "nikitabobko/tap/aerospace"
@@ -193,12 +195,11 @@ in
       "brave-browser"
       "font-space-mono-nerd-font"
       "1password"
-      "logi-options+"
       "losslesscut"
       "postman"
       "figma"
     ];
-    onActivation.cleanup = "zap";
+    onActivation.cleanup = "none";
     onActivation.autoUpdate = true;
     onActivation.upgrade = true;
   };
