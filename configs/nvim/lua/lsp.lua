@@ -199,8 +199,8 @@ return {
 					sh = { "shfmt" },
 					bash = { "shfmt" },
 					python = { "isort", "black" },
-					javascript = { "prettierd" },
-					javascriptreact = { "eslint_d", "prettierd" },
+					javascript = { "eslint_d" },
+					javascriptreact = { "eslint_d" },
 					typescript = { "prettierd" },
 					typescriptreact = { "prettierd" },
 					nix = { "nixfmt" },
@@ -246,7 +246,7 @@ return {
 			require("copilot").setup({
 				suggestion = {
 					panel = { enabled = false },
-					enabled = true,
+					enabled = vim.env.NIX_HOST == "home",
 					auto_trigger = true,
 					hide_during_completion = true,
 					debounce = 75,

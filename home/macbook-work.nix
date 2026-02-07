@@ -17,6 +17,15 @@ in
         source "${dotfiles}/profiles/work.fish"
       end
     '';
+
+    shellAbbrs = {
+      hm = "nvim ${nixDir}/home/macbook-work.nix";
+      conf = "nvim ${nixDir}/hosts/macbook-work/configuration.nix";
+    };
+  };
+
+  home.sessionVariables = {
+    NIX_HOST = "work";
   };
 
   home.sessionPath = [

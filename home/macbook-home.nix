@@ -22,13 +22,14 @@ in
     '';
 
     shellAbbrs = {
-      hm = "nvim ${nixDir}/home/home.nix";
+      hm = "nvim ${nixDir}/home/macbook-home.nix";
       conf = "nvim ${nixDir}/hosts/macbook-home/configuration.nix";
     };
   };
 
   home.sessionVariables = {
     SOPS_AGE_KEY_FILE = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
+    NIX_HOST = "home";
   };
 
   home.sessionPath = [
