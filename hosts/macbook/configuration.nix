@@ -167,7 +167,6 @@ in
     dockfmt
     yamlfmt
     clang-tools
-    eslint_d
   ];
 
   homebrew = {
