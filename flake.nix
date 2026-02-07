@@ -51,7 +51,7 @@
         inherit system;
 
         modules = [
-          ./hosts/macbook/configuration.nix
+          ./hosts/macbook-home/configuration.nix
           stylix.darwinModules.stylix
           home-manager.darwinModules.home-manager
 

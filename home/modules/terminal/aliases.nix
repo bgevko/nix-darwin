@@ -17,7 +17,7 @@
     aero = "nvim ~/nixos/configs/aerospace/aerospace.toml";
     auth = "nvim ~/nixos/home/modules/auth.nix";
     lkey = "nvim ~/nixos/configs/leader-key.json";
-    conf = "nvim /Users/bgevko/nixos/hosts/macbook/configuration.nix";
+    conf = "nvim /Users/bgevko/nixos/hosts/macbook-home/configuration.nix";
     hm = "nvim /Users/bgevko/nixos/home/bgevko-mac.nix";
 
     # CD Into ..
