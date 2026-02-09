@@ -195,6 +195,7 @@ in
       "direnv"
       "cloc"
       "eslint_d"
+      "gh"
     ];
 
     casks = [

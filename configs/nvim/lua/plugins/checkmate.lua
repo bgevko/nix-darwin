@@ -1,5 +1,6 @@
 return {
 	"bngarren/checkmate.nvim",
+	enabled = false,
 	config = function()
 		require("checkmate").setup({
 			files = {

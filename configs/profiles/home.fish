@@ -1,11 +1,12 @@
-# Paths
-fish_add_path ~/.local/bin
-fish_add_path ~/nixos/bin
-fish_add_path "$(go env GOPATH)/bin"
-
-# Direnv
-direnv hook fish | source
+if test -f $NIX_DOTFILES/profiles/common.fish
+    source $NIX_DOTFILES/profiles/common.fish
+else
+    echo "Error: common.fish not found in $NIX_DOTFILES/profiles/"
+end
 
 # Do stuff
-abbr -a src "source ~/nixos/configs/profiles/personal.fish"
-abbr -a wp "nvim ~/nixos/configs/profiles/personal.fish"
+abbr -a src "source ~/nixos/configs/profiles/home.fish"
+abbr -a wp "nvim ~/nixos/configs/profiles/home.fish"
+
+# cd into stuff
+abbr -a wos "cd ~/Projects/web-os/"

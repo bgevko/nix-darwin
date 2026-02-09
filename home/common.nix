@@ -5,6 +5,7 @@
 }:
 let
   nixDir = "${config.home.homeDirectory}/nixos";
+  homeDir = config.home.homeDirectory;
   dotfiles = "${nixDir}/configs";
   app_support = "Library/Application Support";
   symlink = config.lib.file.mkOutOfStoreSymlink;
@@ -58,13 +59,15 @@ in
   home.sessionPath = [
     "/opt/homebrew/bin"
     "/opt/homebrew/sbin"
-    "${config.home.homeDirectory}/.local/share/pnpm"
-    "${config.home.homeDirectory}/.local/bin"
+    "${homeDir}/.local/share/pnpm"
+    "${homeDir}/.local/share/pnpm"
+    "${homeDir}/.local/bin"
     "${nixDir}/bin"
   ];
 
   home.sessionVariables = {
     NIX_DIR = nixDir;
+    HOME = homeDir;
     NIX_DOTFILES = dotfiles;
     PNPM_HOME = "${config.home.homeDirectory}/.local/share/pnpm";
   };

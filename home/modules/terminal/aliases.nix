@@ -30,5 +30,7 @@ in
     nkeys = "nvim ${dotfiles}/nvim/lua/keymaps.lua";
     ncmds = "nvim ${dotfiles}/nvim/lua/auto_cmds.lua";
     lsp = "nvim ${dotfiles}/nvim/lua/lsp.lua";
+    hmc = "nvim ${nixDir}/home/common.nix";
+    wpc = "nvim ${dotfiles}/profiles/common.fish";
   };
 }
