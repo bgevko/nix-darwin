@@ -196,6 +196,7 @@ in
       "cloc"
       "eslint_d"
       "gh"
+      "cobra-cli"
     ];
 
     casks = [
