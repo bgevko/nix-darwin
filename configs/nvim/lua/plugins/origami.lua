@@ -4,7 +4,9 @@ return {
 		"chrisgrieser/nvim-origami",
 		event = "VeryLazy",
 		opts = {
-			useLspFoldsWithTreesitterFallback = true,
+			useLspFoldsWithTreesitterFallback = {
+				enabled = true,
+			},
 			pauseFoldsOnSearch = true,
 			foldtext = {
 				enabled = true,
