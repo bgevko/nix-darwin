@@ -236,6 +236,7 @@ return {
 	--          ╰─────────────────────────────────────────────────────────╯
 	{
 		"zbirenbaum/copilot.lua",
+		enabled = vim.env.NIX_HOST == "home",
 		config = function()
 			require("copilot").setup({
 				suggestion = {

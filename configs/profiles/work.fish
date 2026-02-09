@@ -4,8 +4,8 @@ else
     echo "Error: common.fish not found in $NIX_DOTFILES/profiles/"
 end
 
-if test -f ~/.work-profile
-    source ~/.work-profile
+if test -f ~/.work_profile.fish
+    source ~/.work_profile.fish
 else
-    echo "Unable to source ~/.work-profile
+    echo "Unable to source ~/.work_profile.fish"
 end

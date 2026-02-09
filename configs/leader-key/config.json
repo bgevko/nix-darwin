@@ -173,6 +173,12 @@
           "label" : "GitHub",
           "type" : "url",
           "value" : "https://github.iad-dev.opower.it/"
+        },
+        {
+          "key" : "c",
+          "label" : "Codex Api Key",
+          "type" : "url",
+          "value" : "https://apex.oraclecorp.com/pls/apex/r/oca/api-key/home"
         }
       ],
       "iconPath" : "globe",
