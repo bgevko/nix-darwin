@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat >&2 <<'EOF'
+Usage:
+  gh-repo
+
+Opens the GitHub repository page for the current directory,
+derived from the 'origin' git remote.
+
+Example:
+  gh-repo
+EOF
+}
+
+if [[ $# -ne 0 ]]; then
+  echo "Error: this command takes no arguments; got $#." >&2
+  usage
+  exit 2
+fi
+
+# Ensure we're in a git repository
+if [[ ! -d ".git" ]] && ! git rev-parse --git-dir >/dev/null 2>&1; then
+  echo "Error: not a git repository (can't find .git metadata). Run from within a cloned repo." >&2
+  exit 1
+fi
+
+origin_url="$(git remote get-url origin 2>/dev/null || true)"
+if [[ -z "${origin_url}" ]]; then
+  echo "Error: no 'origin' remote found; can't derive repo URL." >&2
+  exit 1
+fi
+
+# Normalize origin into an https repo URL
+if [[ "$origin_url" =~ ^git@([^:]+):(.+)$ ]]; then
+  host="${BASH_REMATCH[1]}"
+  path="${BASH_REMATCH[2]%.git}"
+  repo_url="https://${host}/${path}"
+elif [[ "$origin_url" =~ ^https?:// ]]; then
+  repo_url="${origin_url%.git}"
+else
+  echo "Error: unrecognized origin URL format: $origin_url" >&2
+  exit 1
+fi
+
+echo "$repo_url"
+
+# Open URL (best-effort)
+if command -v open >/dev/null 2>&1; then
+  open "$repo_url"
+elif command -v xdg-open >/dev/null 2>&1; then
+  xdg-open "$repo_url" >/dev/null 2>&1 &
+elif command -v wslview >/dev/null 2>&1; then
+  wslview "$repo_url"
+else
+  echo "Note: couldn't find a browser opener (open/xdg-open/wslview). Copy/paste the URL above." >&2
+fi
