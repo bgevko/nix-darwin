@@ -6,45 +6,37 @@ return {
 	--          ╰─────────────────────────────────────────────────────────╯
 	{
 		"nvim-treesitter/nvim-treesitter",
+		lazy = false,
 		build = ":TSUpdate",
 		config = function()
-			require("nvim-treesitter.configs").setup({
-				ensure_installed = {
-					"bash",
-					"c",
-					"cmake",
-					"cpp",
-					"css",
-					"dockerfile",
-					"go",
-					"html",
-					"javascript",
-					"json",
-					"jsonc",
-					"lua",
-					"markdown",
-					"nix",
-					"python",
-					"rust",
-					"scss",
-					"typescript",
-					"yaml",
-				},
-				auto_install = false,
-				highlight = {
-					enable = true,
-					disable = function(lang, buf)
-						local max = 100 * 1024
-						local ok, stat = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-						if ok and stat and stat.size > max then
-							return true
-						end
-						if lang == "http" then
-							return true
-						end
-					end,
-					additional_vim_regex_highlighting = false,
-				},
+			local ts = require("nvim-treesitter")
+
+			ts.setup({
+				-- Keep your existing install dir behavior (matches your init.lua prepend)
+				install_dir = vim.fn.stdpath("data") .. "/site",
+			})
+
+			-- Install parsers (no-op if already installed)
+			ts.install({
+				"bash",
+				"c",
+				"cmake",
+				"cpp",
+				"css",
+				"dockerfile",
+				"go",
+				"html",
+				"javascript",
+				"json",
+				"lua",
+				"markdown",
+				"nix",
+				"python",
+				"rust",
+				"scss",
+				"typescript",
+				"yaml",
+				"fish",
 			})
 		end,
 	},
@@ -99,6 +91,7 @@ return {
 				cssls = {},
 				gopls = {},
 				eslint = {},
+				fish_lsp = {},
 			}
 
 			-- 4. configure + warn + enable
@@ -220,6 +213,7 @@ return {
 					scss = { "prettierd", "prettier", stop_after_first = true },
 					less = { "prettierd", "prettier", stop_after_first = true },
 					go = { "gofumpt", "gofmt", stop_after_first = true },
+					fish = { "fish_indent" },
 					["_"] = { "trim_whitespace" },
 				},
 
