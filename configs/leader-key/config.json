@@ -137,10 +137,42 @@
     {
       "actions" : [
         {
-          "key" : "n",
-          "label" : "Nix Search",
+          "key" : "m",
+          "label" : "Email",
           "type" : "url",
-          "value" : "https://search.nixos.org/packages"
+          "value" : "https://outlook.office.com/mail/"
+        },
+        {
+          "actions" : [
+            {
+              "key" : "b",
+              "label" : "WebCats Board",
+              "type" : "url",
+              "value" : "https://gbujira.oraclecorp.com/secure/RapidBoard.jspa?rapidView=48664"
+            },
+            {
+              "key" : "t",
+              "label" : "Ticket (Current)",
+              "type" : "url",
+              "value" : "https://gbujira.oraclecorp.com/browse/DSM-31537"
+            },
+            {
+              "key" : "p",
+              "label" : "Jira PAT",
+              "type" : "url",
+              "value" : "https://gbujira.oraclecorp.com/secure/ViewProfile.jspa?selectedTab=com.atlassian.pats.pats-plugin:jira-user-personal-access-tokens"
+            }
+          ],
+          "iconPath" : "desktopcomputer",
+          "key" : "j",
+          "label" : "Jira",
+          "type" : "group"
+        },
+        {
+          "key" : "g",
+          "label" : "GitHub",
+          "type" : "url",
+          "value" : "https://github.iad-dev.opower.it/"
         }
       ],
       "iconPath" : "globe",
