@@ -69,3 +69,14 @@ vim.opt.virtualedit = "block"
 vim.opt.wildmode = { "longest:full", "full" }
 vim.opt.winminwidth = 5
 vim.opt.wrap = false
+
+-- Suppress the noisy LSP hover toast from nvim-notify
+do
+	local orig = vim.notify
+	vim.notify = function(msg, level, opts)
+		if type(msg) == "string" and msg:find("No information available", 1, true) then
+			return
+		end
+		return orig(msg, level, opts)
+	end
+end

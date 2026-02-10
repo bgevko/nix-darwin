@@ -6,11 +6,10 @@ return {
 	-- ╰─────────────────────────────────────────────────────────╯
 	{
 		"nvim-treesitter/nvim-treesitter",
-		lazy = false, -- recommended by docs: plugin not lazy-load safe
-		build = ":TSUpdate", -- recommended by docs
+		lazy = false,
+		build = ":TSUpdate",
 		config = function()
 			require("nvim-treesitter").setup({
-				-- optional; default is stdpath('data') .. '/site'
 				install_dir = vim.fn.stdpath("data") .. "/site",
 			})
 
