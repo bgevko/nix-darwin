@@ -325,3 +325,11 @@ vim.keymap.set("n", "<leader>uf", toggle_autoformat, {
 vim.keymap.set("n", "<leader>rr", function()
 	vim.fn.system({ "osascript", "-e", 'tell application "Brave Browser" to reload active tab of front window' })
 end, { desc = "Refresh Browser" })
+
+-- JS-only normal-mode "cl" -> inserts console.log('here');
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "javascript", "javascriptreact" },
+	callback = function()
+		vim.keymap.set("n", "cl", "oconsole.log('here');<esc>", { buffer = true, silent = true })
+	end,
+})

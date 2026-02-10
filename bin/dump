@@ -15,7 +15,18 @@ IGNORE_DIRS = {
     "coverage",
 }
 
-EXTENSIONS = {".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".json", ".md", ".nix"}
+EXTENSIONS = {
+    ".lua",
+    ".js",
+    ".jsx",
+    ".ts",
+    ".tsx",
+    ".mjs",
+    ".cjs",
+    ".json",
+    ".md",
+    ".nix",
+}
 
 
 def dump_file(path, root):

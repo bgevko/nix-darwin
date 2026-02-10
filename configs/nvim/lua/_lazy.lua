@@ -25,7 +25,7 @@ require("auto_cmds")
 require("lazy").setup({
 	spec = {
 		{ import = "plugins" },
-		{ import = "lsp" },
+		require("lsp"),
 	},
 	install = { colorscheme = { "habamax" } },
 	checker = { enabled = false },

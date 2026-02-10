@@ -1,46 +1,57 @@
 ---@diagnostic disable: undefined-global
 return {
 
-	--          ╭─────────────────────────────────────────────────────────╮
-	--          │                       TREESITTER                        │
-	--          ╰─────────────────────────────────────────────────────────╯
+	-- ╭─────────────────────────────────────────────────────────╮
+	-- │                       Tree Sitter                       │
+	-- ╰─────────────────────────────────────────────────────────╯
 	{
 		"nvim-treesitter/nvim-treesitter",
-		lazy = false,
-		build = ":TSUpdate",
+		lazy = false, -- recommended by docs: plugin not lazy-load safe
+		build = ":TSUpdate", -- recommended by docs
 		config = function()
-			local ts = require("nvim-treesitter")
-
-			ts.setup({
-				-- Keep your existing install dir behavior (matches your init.lua prepend)
+			require("nvim-treesitter").setup({
+				-- optional; default is stdpath('data') .. '/site'
 				install_dir = vim.fn.stdpath("data") .. "/site",
 			})
 
-			-- Install parsers (no-op if already installed)
-			ts.install({
-				"bash",
-				"c",
-				"cmake",
-				"cpp",
-				"css",
-				"dockerfile",
-				"go",
-				"html",
-				"javascript",
-				"json",
-				"lua",
-				"markdown",
-				"nix",
-				"python",
-				"rust",
-				"scss",
-				"typescript",
-				"yaml",
-				"fish",
+			-- optional: auto-enable features for your languages
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = {
+					"bash",
+					"c",
+					"cmake",
+					"cpp",
+					"css",
+					"dockerfile",
+					"go",
+					"html",
+					"javascript",
+					"json",
+					"lua",
+					"markdown",
+					"nix",
+					"python",
+					"rust",
+					"scss",
+					"typescript",
+					"typescriptreact",
+					"yaml",
+					"fish",
+				},
+				callback = function()
+					-- highlighting (Neovim built-in)
+					pcall(vim.treesitter.start)
+
+					-- folds (Neovim built-in)
+					vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+					vim.wo.foldmethod = "expr"
+
+					-- indentation (provided by nvim-treesitter)
+					vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+				end,
 			})
 		end,
 	},
-
 	--          ╭─────────────────────────────────────────────────────────╮
 	--          │                        LSPCONFIG                        │
 	--          ╰─────────────────────────────────────────────────────────╯

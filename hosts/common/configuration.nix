@@ -199,6 +199,7 @@ in
       "eslint_d"
       "gh"
       "cobra-cli"
+      "tree-sitter-cli"
     ];
 
     casks = [
