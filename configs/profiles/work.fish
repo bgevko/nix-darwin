@@ -4,6 +4,8 @@ else
     echo "Error: common.fish not found in $NIX_DOTFILES/profiles/"
 end
 
+abbr -a src "source $NIX_DOTFILES/profiles/work.fish"
+
 if test -f ~/.work_profile.fish
     source ~/.work_profile.fish
 else

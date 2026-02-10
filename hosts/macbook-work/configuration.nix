@@ -12,6 +12,7 @@
     brews = [
       "fnm"
       "hashicorp/tap/vault"
+      "python@3.11"
     ];
     casks = [
       "codex"

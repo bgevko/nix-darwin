@@ -130,6 +130,7 @@ in
     golangci-lint
     delve
     rustup
+    pyenv
 
     # utilities
     lazygit
@@ -160,6 +161,7 @@ in
     docker-language-server
     yaml-language-server
     vscode-langservers-extracted
+    fish-lsp
 
     # formatters / linters
     stylua

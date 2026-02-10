@@ -207,7 +207,7 @@ return {
 					templ = { "prettierd", "prettier", stop_after_first = true },
 					json = { "prettierd", "prettier", stop_after_first = true },
 					jsonc = { "prettierd", "prettier", stop_after_first = true },
-					markdown = { "prettierd", "prettier", stop_after_first = true },
+					-- markdown = { "prettierd", "prettier", stop_after_first = true },
 					yaml = { "yamlfmt" },
 					css = { "prettierd", "prettier", stop_after_first = true },
 					scss = { "prettierd", "prettier", stop_after_first = true },

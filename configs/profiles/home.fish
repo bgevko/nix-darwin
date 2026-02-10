@@ -5,8 +5,8 @@ else
 end
 
 # Do stuff
-abbr -a src "source ~/nixos/configs/profiles/home.fish"
-abbr -a wp "nvim ~/nixos/configs/profiles/home.fish"
+abbr -a src "source $NIX_DOTFILES/profiles/home.fish"
+abbr -a wp "nvim $NIX_DOTFILES/profiles/home.fish"
 
 # cd into stuff
 abbr -a wos "cd ~/Projects/web-os/"
