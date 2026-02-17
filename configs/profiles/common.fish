@@ -8,6 +8,7 @@ direnv hook fish | source
 # Do stuff
 abbr -a wpc "nvim $NIX_DOTFILES/profiles/common.fish"
 abbr -a lg lazygit
+abbr -a jsnip "nvim $NIX_DOTFILES/nvim/lua/snippets/javascript.json"
 
 # Cd into
 abbr -a rem "cd ~/Projects/reman"

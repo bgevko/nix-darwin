@@ -1,0 +1,28 @@
+{
+  "Console log": {
+    "prefix": "cl",
+    "body": "console.log(${1});",
+    "description": "console.log(value)"
+  },
+
+  "JSON stringify pretty": {
+    "prefix": "js",
+    "body": "JSON.stringify(${1:src}, null, 2)",
+    "description": "JSON.stringify(x, null, 2)"
+  },
+
+  "Write file sync JSON": {
+    "prefix": "jw",
+    "body": [
+      "const fs = require('node:fs');",
+      "fs.writeFileSync(",
+      "  'out.json',",
+      "  JSON.stringify(${1}, null, 2),",
+      "  'utf8'",
+      ");",
+      "",
+      "${0}"
+    ],
+    "description": "require fs + writeFileSync JSON.stringify(..., null, 2)"
+  }
+}

@@ -163,33 +163,31 @@ return {
 	--          ╰─────────────────────────────────────────────────────────╯
 	{
 		"saghen/blink.cmp",
-		dependencies = {
-			"rafamadriz/friendly-snippets",
-		},
 		version = "1.*",
 		opts = {
 			keymap = { preset = "enter" },
-			appearance = {
-				nerd_font_variant = "mono",
-			},
-			snippets = {
-				preset = "default",
-			},
-			signature = {
-				enabled = false,
-			},
+			appearance = { nerd_font_variant = "mono" },
+
+			snippets = { preset = "default" },
+
+			signature = { enabled = false },
+
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer" },
+				providers = {
+					snippets = {
+						opts = {
+							friendly_snippets = false,
+							search_paths = { vim.fn.stdpath("config") .. "/lua/snippets" },
+						},
+					},
+				},
 			},
-			fuzzy = {
-				implementation = "prefer_rust_with_warning",
-			},
-		},
 
-		-- Allows other specs to extend source lists
+			fuzzy = { implementation = "prefer_rust_with_warning" },
+		},
 		opts_extend = { "sources.default" },
 	},
-
 	--          ╭─────────────────────────────────────────────────────────╮
 	--          │                   FORMATTER → Conform                   │
 	--          ╰─────────────────────────────────────────────────────────╯
