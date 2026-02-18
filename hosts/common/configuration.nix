@@ -200,6 +200,7 @@ in
       "gh"
       "cobra-cli"
       "tree-sitter-cli"
+      "fish-lsp"
     ];
 
     casks = [

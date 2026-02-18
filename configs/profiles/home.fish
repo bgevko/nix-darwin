@@ -10,3 +10,6 @@ abbr -a wp "nvim $NIX_DOTFILES/profiles/home.fish"
 
 # cd into stuff
 abbr -a wos "cd ~/Projects/web-os/"
+abbr -a boot "cd ~/Projects/web-os/src/core/boot"
+abbr -a ipc "cd ~/Projects/web-os/src/core/ipc"
+abbr -a shell "cd ~/Projects/web-os/src/shell"
