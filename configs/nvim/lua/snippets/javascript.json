@@ -4,6 +4,14 @@
     "body": "console.log(${1});",
     "description": "console.log(value)"
   },
+  "Console log line": {
+    "prefix": "cll",
+    "body": [
+      "console.log('─[ here ]───────────────────────────────────────────────────────────');",
+      "${0}"
+    ],
+    "description": "console.log(value)"
+  },
 
   "JSON stringify pretty": {
     "prefix": "js",

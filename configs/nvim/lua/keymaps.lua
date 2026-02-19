@@ -338,3 +338,45 @@ vim.api.nvim_create_autocmd("FileType", {
 		)
 	end,
 })
+
+-- Yank absolute file path to clipboard
+vim.keymap.set("n", "yp", function()
+	local filepath = vim.fn.expand("%:p")
+	if filepath == "" then
+		vim.notify("No file name", vim.log.levels.WARN)
+		return
+	end
+
+	vim.fn.setreg("+", filepath)
+	vim.notify("Yanked file path to clipboard", vim.log.levels.INFO)
+end, {
+	desc = "Yank File Path",
+})
+
+-- Yank path relative to current working directory
+vim.keymap.set("n", "ypr", function()
+	local filepath = vim.fn.expand("%:.")
+	if filepath == "" then
+		vim.notify("No file name", vim.log.levels.WARN)
+		return
+	end
+
+	vim.fn.setreg("+", filepath)
+	vim.notify("Yanked relative file path (cwd)", vim.log.levels.INFO)
+end, {
+	desc = "Yank Relative File Path",
+})
+
+-- Yank current file name (no path) to clipboard
+vim.keymap.set("n", "yf", function()
+	local filename = vim.fn.expand("%:t")
+	if filename == "" then
+		vim.notify("No file name", vim.log.levels.WARN)
+		return
+	end
+
+	vim.fn.setreg("+", filename)
+	vim.notify("Yanked file name to clipboard", vim.log.levels.INFO)
+end, {
+	desc = "Yank File Name",
+})
