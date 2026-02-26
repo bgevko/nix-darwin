@@ -26,6 +26,9 @@ EXTENSIONS = {
     ".json",
     ".md",
     ".nix",
+    ".go",
+    ".sum",
+    ".mod",
 }
 
 
