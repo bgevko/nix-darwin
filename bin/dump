@@ -27,8 +27,11 @@ EXTENSIONS = {
     ".md",
     ".nix",
     ".go",
-    ".sum",
     ".mod",
+    ".sum",
+    ".txt",
+    ".xml",
+    ".html",
 }
 
 
