@@ -12,3 +12,4 @@ abbr -a jsnip "nvim $NIX_DOTFILES/nvim/lua/snippets/javascript.json"
 
 # Cd into
 abbr -a rem "cd ~/Projects/reman"
+abbr -a wos "cd ~/Projects/web-os"

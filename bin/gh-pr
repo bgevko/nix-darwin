@@ -1,0 +1,121 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat >&2 <<'EOF'
+Usage:
+  gh-pr
+
+Prints and opens a GitHub compare URL suitable for creating a PR from your current
+branch on your fork (origin) into the target repo (upstream if present, else origin).
+
+Heuristics:
+- target repo: upstream (if remote exists), otherwise origin
+- base branch: attempts to detect remote default branch via refs/remotes/<target>/HEAD,
+  otherwise tries main then master
+- head ref: <originOwner>:<originRepo>:<currentBranch>
+
+Example URL shape:
+  https://host/upstreamOwner/upstreamRepo/compare/master...you:yourRepo:your-branch?expand=1
+EOF
+}
+
+if [[ $# -ne 0 ]]; then
+  echo "Error: this command takes no arguments; got $#." >&2
+  usage
+  exit 2
+fi
+
+# Ensure we're in a git repository
+if [[ ! -d ".git" ]] && ! git rev-parse --git-dir >/dev/null 2>&1; then
+  echo "Error: not a git repository. Run from within a cloned repo." >&2
+  exit 1
+fi
+
+branch="$(git branch --show-current 2>/dev/null || true)"
+if [[ -z "$branch" ]]; then
+  # detached HEAD or older git
+  branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || true)"
+fi
+if [[ -z "$branch" || "$branch" == "HEAD" ]]; then
+  echo "Error: could not determine current branch (detached HEAD?)." >&2
+  exit 1
+fi
+
+origin_url="$(git remote get-url origin 2>/dev/null || true)"
+if [[ -z "${origin_url}" ]]; then
+  echo "Error: no 'origin' remote found; can't derive fork repo." >&2
+  exit 1
+fi
+
+# Choose target remote: upstream if it exists, else origin
+target_remote="upstream"
+target_url="$(git remote get-url upstream 2>/dev/null || true)"
+if [[ -z "${target_url}" ]]; then
+  target_remote="origin"
+  target_url="$origin_url"
+fi
+
+# Normalize git remote into (host, owner/repo) and https repo URL
+# Supports:
+#   - git@host:owner/repo(.git)
+#   - https://host/owner/repo(.git)
+parse_remote() {
+  local raw="$1"
+  local host path
+
+  if [[ "$raw" =~ ^git@([^:]+):(.+)$ ]]; then
+    host="${BASH_REMATCH[1]}"
+    path="${BASH_REMATCH[2]%.git}"
+  elif [[ "$raw" =~ ^https?://([^/]+)/(.+)$ ]]; then
+    host="${BASH_REMATCH[1]}"
+    path="${BASH_REMATCH[2]%.git}"
+  else
+    echo "Error: unrecognized remote URL format: $raw" >&2
+    return 1
+  fi
+
+  # Output: host<TAB>owner/repo
+  printf "%s\t%s\n" "$host" "$path"
+}
+
+origin_parsed="$(parse_remote "$origin_url")"
+target_parsed="$(parse_remote "$target_url")"
+
+origin_host="$(cut -f1 <<<"$origin_parsed")"
+origin_path="$(cut -f2 <<<"$origin_parsed")"  # owner/repo
+target_host="$(cut -f1 <<<"$target_parsed")"
+target_path="$(cut -f2 <<<"$target_parsed")"  # owner/repo
+
+# Host should match; if not, still generate a URL using the target host.
+# (This is rare but possible.)
+target_repo_url="https://${target_host}/${target_path}"
+
+origin_owner="${origin_path%%/*}"
+origin_repo="${origin_path##*/}"
+
+# Detect default branch of target remote.
+# Preferred: refs/remotes/<remote>/HEAD -> e.g. upstream/master
+base_branch=""
+if ref="$(git symbolic-ref -q --short "refs/remotes/${target_remote}/HEAD" 2>/dev/null || true)"; then
+  # ref is like: upstream/master
+  base_branch="${ref#${target_remote}/}"
+fi
+
+# Fallback heuristics if remote HEAD isn't available locally
+if [[ -z "$base_branch" ]]; then
+  if git show-ref --verify --quiet "refs/remotes/${target_remote}/main"; then
+    base_branch="main"
+  elif git show-ref --verify --quiet "refs/remotes/${target_remote}/master"; then
+    base_branch="master"
+  else
+    base_branch="main"
+  fi
+fi
+
+# Compose compare URL:
+#   /compare/<base>...<forkOwner>:<forkRepo>:<branch>?expand=1
+compare_url="${target_repo_url}/compare/${base_branch}...${origin_owner}:${origin_repo}:${branch}?expand=1"
+
+echo "$compare_url"
+open "$compare_url"
