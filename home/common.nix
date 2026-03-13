@@ -43,6 +43,12 @@ in
   };
 
   programs.bat.enable = true;
+  programs.git = {
+    enable = true;
+    settings = {
+      core.editor = "nvim";
+    };
+  };
 
   xdg.configFile = {
     "kitty".source = symlink "${dotfiles}/kitty";

@@ -205,6 +205,7 @@ in
       "fish-lsp"
       "httpie"
       "oven-sh/bun/bun"
+      "tsc"
     ];
 
     casks = [
