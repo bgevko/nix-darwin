@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PLIST="/Library/LaunchDaemons/com.oracle.oss.mysql.mysqld.plist"
+MYSQLD="/usr/local/mysql/bin/mysqld"
+DATADIR="/usr/local/mysql/data-dev"
+SOCK="/tmp/mysql.sock"
+PORT="3306"
+
+echo "→ Stopping any running MySQL..."
+mysqladmin shutdown 2>/dev/null || true
+
+echo "→ Booting out launchd job (prevents auto-restart)..."
+sudo launchctl bootout system "$PLIST" 2>/dev/null || true
+
+echo "→ Starting DEV (populated) instance..."
+sudo -u _mysql "$MYSQLD" \
+  --basedir=/usr/local/mysql \
+  --datadir="$DATADIR" \
+  --port="$PORT" \
+  --socket="$SOCK" \
+  --plugin-dir=/usr/local/mysql/lib/plugin \
+  --log-error="$DATADIR/mysqld.local.err" \
+  --pid-file="$DATADIR/mysqld.local.pid" \
+  --keyring-file-data=/usr/local/mysql/keyring/keyring \
+  --early-plugin-load=keyring_file=keyring_file.so &
+
+# wait up to ~5s for socket to appear
+for _ in {1..50}; do
+  [ -S "$SOCK" ] && break
+  sleep 0.1
+done
+
+echo "→ Current datadir:"
+if ! mysql --socket="$SOCK" -e "SELECT @@datadir;"; then
+  echo "→ mysqld did not come up. Last 80 lines of dev error log:"
+  sudo tail -n 80 "$DATADIR/mysqld.local.err" || true
+  exit 1
+fi

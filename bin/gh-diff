@@ -32,8 +32,11 @@ fi
 
 origin_url="$(git remote get-url upstream 2>/dev/null || true)"
 if [[ -z "${origin_url}" ]]; then
-  echo "Error: no 'origin' remote found; can't derive repo URL." >&2
-  exit 1
+  origin_url="$(git remote get-url origin 2>/dev/null || true)"
+  if [[ -z "${origin_url}" ]]; then
+    echo "Error: no 'upstream' or 'origin' remote found; can't derive repo URL." >&2
+    exit 1
+  fi
 fi
 
 # Normalize origin into an https repo URL
