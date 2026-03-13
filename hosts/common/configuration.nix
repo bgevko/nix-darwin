@@ -178,6 +178,7 @@ in
     clang-tools
 
     home-manager
+    pandoc
   ];
 
   homebrew = {
@@ -192,6 +193,7 @@ in
       "borders"
       "sketchybar"
       "jq"
+      "yq"
       "gs"
       "neovim"
       "direnv"
@@ -201,6 +203,8 @@ in
       "cobra-cli"
       "tree-sitter-cli"
       "fish-lsp"
+      "httpie"
+      "oven-sh/bun/bun"
     ];
 
     casks = [

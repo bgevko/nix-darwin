@@ -2,7 +2,7 @@
 set -euo pipefail
 
 usage() {
-	cat >&2 <<'EOF'
+  cat >&2 <<'EOF'
 Usage:
   gh-diff <base> <head>
 
@@ -16,9 +16,9 @@ EOF
 }
 
 if [[ $# -ne 2 ]]; then
-	echo "Error: expected 2 arguments (base, head); got $#." >&2
-	usage
-	exit 2
+  echo "Error: expected 2 arguments (base, head); got $#." >&2
+  usage
+  exit 2
 fi
 
 BASE="$1"
@@ -26,26 +26,26 @@ HEAD="$2"
 
 # We only require git metadata so we can derive the repo URL
 if [[ ! -d ".git" ]] && ! git rev-parse --git-dir >/dev/null 2>&1; then
-	echo "Error: not a git repository (can't find .git metadata). Run from within a cloned repo." >&2
-	exit 1
+  echo "Error: not a git repository (can't find .git metadata). Run from within a cloned repo." >&2
+  exit 1
 fi
 
-origin_url="$(git remote get-url origin 2>/dev/null || true)"
+origin_url="$(git remote get-url upstream 2>/dev/null || true)"
 if [[ -z "${origin_url}" ]]; then
-	echo "Error: no 'origin' remote found; can't derive repo URL." >&2
-	exit 1
+  echo "Error: no 'origin' remote found; can't derive repo URL." >&2
+  exit 1
 fi
 
 # Normalize origin into an https repo URL
 if [[ "$origin_url" =~ ^git@([^:]+):(.+)$ ]]; then
-	host="${BASH_REMATCH[1]}"
-	path="${BASH_REMATCH[2]%.git}"
-	repo_url="https://${host}/${path}"
+  host="${BASH_REMATCH[1]}"
+  path="${BASH_REMATCH[2]%.git}"
+  repo_url="https://${host}/${path}"
 elif [[ "$origin_url" =~ ^https?:// ]]; then
-	repo_url="${origin_url%.git}"
+  repo_url="${origin_url%.git}"
 else
-	echo "Error: unrecognized origin URL format: $origin_url" >&2
-	exit 1
+  echo "Error: unrecognized origin URL format: $origin_url" >&2
+  exit 1
 fi
 
 compare_url="${repo_url}/compare/${BASE}...${HEAD}"
@@ -53,11 +53,11 @@ echo "$compare_url"
 
 # Open URL (best-effort)
 if command -v open >/dev/null 2>&1; then
-	open "$compare_url"
+  open "$compare_url"
 elif command -v xdg-open >/dev/null 2>&1; then
-	xdg-open "$compare_url" >/dev/null 2>&1 &
+  xdg-open "$compare_url" >/dev/null 2>&1 &
 elif command -v wslview >/dev/null 2>&1; then
-	wslview "$compare_url"
+  wslview "$compare_url"
 else
-	echo "Note: couldn't find a browser opener (open/xdg-open/wslview). Copy/paste the URL above." >&2
+  echo "Note: couldn't find a browser opener (open/xdg-open/wslview). Copy/paste the URL above." >&2
 fi

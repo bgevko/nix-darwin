@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+b=$(git rev-parse --abbrev-ref HEAD)
+base=$(git merge-base master HEAD)
+
+prev="$base"
+for c in $(git rev-list --reverse "$base..HEAD"); do
+	echo "# $(git show -s --format=%s "$c")"
+	git diff "$prev" "$c"
+	echo "# ──────────────────────────────────────────────────────────────────────"
+	prev="$c"
+done
