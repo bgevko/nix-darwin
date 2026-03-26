@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat >&2 <<'EOF'
+Usage:
+  gh-search <text>
+
+Search pull requests by title in the current repository.
+
+Behavior:
+  - Prefer the 'upstream' remote
+  - Fall back to the 'origin' remote
+  - Search PR titles only
+  - Print matching PR URLs, newest first
+
+Examples:
+  gh-search "bump nomad version"
+  gh-search "fix deploy"
+EOF
+}
+
+die() {
+  echo "Error: $*" >&2
+  exit 1
+}
+
+if [[ $# -lt 1 ]]; then
+  usage
+  exit 2
+fi
+
+query_text="$*"
+
+command -v git >/dev/null 2>&1 || die "'git' is required but not installed."
+command -v gh  >/dev/null 2>&1 || die "'gh' is required but not installed."
+
+if ! git rev-parse --git-dir >/dev/null 2>&1; then
+  die "not a git repository (can't find .git metadata). Run from within a cloned repo."
+fi
+
+remote_name=""
+remote_url=""
+
+if remote_url="$(git remote get-url upstream 2>/dev/null)"; then
+  remote_name="upstream"
+elif remote_url="$(git remote get-url origin 2>/dev/null)"; then
+  remote_name="origin"
+else
+  die "no 'upstream' or 'origin' remote found; can't derive repo URL."
+fi
+
+host=""
+path=""
+
+# SSH form: git@host:owner/repo.git
+if [[ "$remote_url" =~ ^git@([^:]+):(.+)$ ]]; then
+  host="${BASH_REMATCH[1]}"
+  path="${BASH_REMATCH[2]%.git}"
+
+# HTTPS form: https://host/owner/repo.git
+elif [[ "$remote_url" =~ ^https?://([^/]+)/(.+)$ ]]; then
+  host="${BASH_REMATCH[1]}"
+  path="${BASH_REMATCH[2]%.git}"
+else
+  die "unrecognized ${remote_name} URL format: $remote_url"
+fi
+
+if [[ "$path" != */* ]]; then
+  die "couldn't parse owner/repo from ${remote_name} URL: $remote_url"
+fi
+
+owner="${path%%/*}"
+repo="${path#*/}"
+
+search_query="is:pr repo:${owner}/${repo} in:title ${query_text}"
+
+# Use the search API directly so we can target the remote's host with --hostname.
+# We force GET because -f fields otherwise switch gh api to POST.
+gh api \
+  --hostname "$host" \
+  --method GET \
+  /search/issues \
+  -f q="$search_query" \
+  -f sort=created \
+  -f order=desc \
+  -f per_page=20 \
+  --jq '
+    if (.items | length) == 0 then
+      "No matching PRs found."
+    else
+      .items[]
+      | "\(.number)\t\(.state)\t\(.title)\t\(.html_url)"
+    end
+  '

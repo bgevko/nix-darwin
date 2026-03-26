@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat >&2 <<'EOF'
+Usage:
+  gh-nextpr
+
+Print the predicted next pull request URL for the current git repository.
+
+Behavior:
+  - Prefer the 'upstream' remote
+  - Fall back to the 'origin' remote
+  - Use GitHub CLI ('gh') against the remote's host
+  - Assume issues may be disabled; predict from the highest existing PR number
+
+Notes:
+  - This is only a prediction.
+  - If another PR is opened before yours, the real PR number will be higher.
+
+Example:
+  gh-nextpr
+EOF
+}
+
+die() {
+  echo "Error: $*" >&2
+  exit 1
+}
+
+if [[ $# -ne 0 ]]; then
+  echo "Error: this command takes no arguments; got $#." >&2
+  usage
+  exit 2
+fi
+
+command -v git >/dev/null 2>&1 || die "'git' is required but not installed."
+command -v gh >/dev/null 2>&1 || die "'gh' is required but not installed."
+
+# Ensure we're in a git repository
+if ! git rev-parse --git-dir >/dev/null 2>&1; then
+  die "not a git repository (can't find .git metadata). Run from within a cloned repo."
+fi
+
+remote_name=""
+remote_url=""
+
+if remote_url="$(git remote get-url upstream 2>/dev/null)"; then
+  remote_name="upstream"
+elif remote_url="$(git remote get-url origin 2>/dev/null)"; then
+  remote_name="origin"
+else
+  die "no 'upstream' or 'origin' remote found; can't derive repo URL."
+fi
+
+host=""
+path=""
+
+# Support SSH form: git@host:owner/repo.git
+if [[ "$remote_url" =~ ^git@([^:]+):(.+)$ ]]; then
+  host="${BASH_REMATCH[1]}"
+  path="${BASH_REMATCH[2]%.git}"
+
+# Support HTTPS form: https://host/owner/repo.git
+elif [[ "$remote_url" =~ ^https?://([^/]+)/(.+)$ ]]; then
+  host="${BASH_REMATCH[1]}"
+  path="${BASH_REMATCH[2]%.git}"
+
+else
+  die "unrecognized ${remote_name} URL format: $remote_url"
+fi
+
+if [[ "$path" != */* ]]; then
+  die "couldn't parse owner/repo from ${remote_name} URL: $remote_url"
+fi
+
+owner="${path%%/*}"
+repo="${path#*/}"
+
+if [[ -z "$owner" || -z "$repo" ]]; then
+  die "couldn't parse owner/repo from ${remote_name} URL: $remote_url"
+fi
+
+# Query the highest existing PR number, then add 1.
+# We force GET because gh api uses POST when -f fields are present.
+#
+# If there are no PRs yet, GitHub returns an empty array, so we fall back to 1.
+next_number="$(
+  gh api \
+    --hostname "$host" \
+    --method GET \
+    "/repos/${owner}/${repo}/pulls" \
+    -f state=all \
+    -f per_page=1 \
+    --jq 'if length == 0 then 1 else (.[0].number + 1) end' \
+    2>/dev/null
+)" || die "failed to query pull requests via gh for ${host}/${owner}/${repo}. Check gh auth and repo access."
+
+pr_url="https://${host}/${owner}/${repo}/pull/${next_number}"
+echo "$pr_url"
