@@ -16,6 +16,7 @@
       "python@3.11"
       "opencode"
       "alvarosanchez/tap/ocp"
+      "podman"
     ];
     casks = [
       "codex"

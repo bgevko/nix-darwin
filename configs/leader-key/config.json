@@ -161,11 +161,17 @@
               "label" : "Jira PAT",
               "type" : "url",
               "value" : "https://gbujira.oraclecorp.com/secure/ViewProfile.jspa?selectedTab=com.atlassian.pats.pats-plugin:jira-user-personal-access-tokens"
+            },
+            {
+              "key" : "P",
+              "label" : "Confluence PAT",
+              "type" : "url",
+              "value" : "https://gbuconfluence.oraclecorp.com/plugins/personalaccesstokens/usertokens.action"
             }
           ],
           "iconPath" : "desktopcomputer",
           "key" : "j",
-          "label" : "Jira",
+          "label" : "Jira/Confluence",
           "type" : "group"
         },
         {
@@ -176,7 +182,7 @@
         },
         {
           "key" : "c",
-          "label" : "Codex Api Key",
+          "label" : "Codex PAT",
           "type" : "url",
           "value" : "https://apex.oraclecorp.com/pls/apex/r/oca/api-key/home"
         }
