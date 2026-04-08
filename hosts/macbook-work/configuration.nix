@@ -8,6 +8,7 @@
     enable = true;
     taps = [
       "hashicorp/tap"
+      "ceejbot/tap"
     ];
     brews = [
       "fnm"
@@ -17,6 +18,7 @@
       "opencode"
       "alvarosanchez/tap/ocp"
       "podman"
+      "tomato"
     ];
     casks = [
       "codex"

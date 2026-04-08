@@ -1,0 +1,200 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+CONFIG_PATH="${CODEX_CONFIG_PATH:-$HOME/.codex/config.toml}"
+
+ALIASES=(
+  "jira=atlassian_jira"
+  "confluence=atlassian_confluence"
+  "chrome=chrome_devtools"
+)
+
+usage() {
+  cat >&2 <<'EOF'
+Usage:
+  mcp-set
+  mcp-set <name[,name...]>
+  mcp-set --list
+
+Examples:
+  mcp-set
+  mcp-set jira
+  mcp-set jira,chrome,confluence
+  mcp-set chrome playwright
+
+Behavior:
+  - No args: disables all discovered MCP servers.
+  - With names: disables all discovered MCP servers, then enables the requested set.
+  - Names may be aliases (jira, confluence, chrome) or exact mcp_servers keys.
+
+Environment:
+  CODEX_CONFIG_PATH
+    Override the config path. Defaults to ~/.codex/config.toml
+EOF
+}
+
+require_command() {
+  local cmd="$1"
+
+  if ! command -v "$cmd" >/dev/null 2>&1; then
+    echo "Error: required command not found: $cmd" >&2
+    exit 1
+  fi
+}
+
+resolve_name() {
+  local input="$1"
+  local mapping alias target
+
+  for mapping in "${ALIASES[@]}"; do
+    alias="${mapping%%=*}"
+    target="${mapping#*=}"
+    if [[ "$input" == "$alias" ]]; then
+      printf '%s\n' "$target"
+      return 0
+    fi
+  done
+
+  printf '%s\n' "$input"
+}
+
+contains() {
+  local needle="$1"
+  shift
+
+  local item
+  for item in "$@"; do
+    if [[ "$item" == "$needle" ]]; then
+      return 0
+    fi
+  done
+
+  return 1
+}
+
+enabled_value() {
+  local server="$1"
+  local key="mcp_servers.${server}.enabled"
+
+  if tomato exists "$key" "$CONFIG_PATH" >/dev/null 2>&1; then
+    tomato get -f toml "$key" "$CONFIG_PATH"
+  else
+    printf '<unset>\n'
+  fi
+}
+
+set_enabled() {
+  local server="$1"
+  local desired="$2"
+  local current
+
+  current="$(enabled_value "$server")"
+  if [[ "$current" == "$desired" ]]; then
+    return 0
+  fi
+
+  tomato set "mcp_servers.${server}.enabled" "$desired" "$CONFIG_PATH" >/dev/null
+}
+
+list_servers() {
+  local server value
+
+  echo "Config: $CONFIG_PATH"
+  echo
+  echo "Aliases:"
+  local mapping
+  for mapping in "${ALIASES[@]}"; do
+    echo "  ${mapping%%=*} -> ${mapping#*=}"
+  done
+
+  echo
+  echo "Discovered MCP servers:"
+  for server in "${SERVERS[@]}"; do
+    value="$(enabled_value "$server")"
+    echo "  $server (enabled=$value)"
+  done
+}
+
+require_command tomato
+
+if [[ ! -f "$CONFIG_PATH" ]]; then
+  echo "Error: config file not found: $CONFIG_PATH" >&2
+  exit 1
+fi
+
+SERVERS=()
+while IFS= read -r line; do
+  [[ -n "$line" ]] || continue
+  SERVERS+=("$line")
+done < <(tomato keys mcp_servers "$CONFIG_PATH")
+
+if [[ ${#SERVERS[@]} -eq 0 ]]; then
+  echo "Error: no mcp_servers found in $CONFIG_PATH" >&2
+  exit 1
+fi
+
+if [[ $# -gt 1 && "$1" == "--list" ]]; then
+  echo "Error: --list does not take additional arguments." >&2
+  usage
+  exit 2
+fi
+
+if [[ $# -eq 1 && "$1" == "--help" ]]; then
+  usage
+  exit 0
+fi
+
+if [[ $# -eq 1 && "$1" == "--list" ]]; then
+  list_servers
+  exit 0
+fi
+
+REQUESTED_INPUTS=()
+if [[ $# -gt 0 ]]; then
+  local_arg=""
+  for local_arg in "$@"; do
+    PARTS=()
+    IFS=',' read -r -a PARTS <<<"$local_arg"
+
+    local_part=""
+    for local_part in "${PARTS[@]}"; do
+      local_part="${local_part//[[:space:]]/}"
+      [[ -n "$local_part" ]] || continue
+      REQUESTED_INPUTS+=("$local_part")
+    done
+  done
+fi
+
+REQUESTED_SERVERS=()
+if [[ ${#REQUESTED_INPUTS[@]} -gt 0 ]]; then
+  input=""
+  resolved=""
+  for input in "${REQUESTED_INPUTS[@]}"; do
+    resolved="$(resolve_name "$input")"
+
+    if ! contains "$resolved" "${SERVERS[@]}"; then
+      echo "Error: unknown MCP '$input' (resolved to '$resolved')." >&2
+      echo "Run 'mcp-set --list' to see valid names." >&2
+      exit 1
+    fi
+
+    if ! contains "$resolved" "${REQUESTED_SERVERS[@]}"; then
+      REQUESTED_SERVERS+=("$resolved")
+    fi
+  done
+fi
+
+server=""
+for server in "${SERVERS[@]}"; do
+  set_enabled "$server" false
+done
+
+for server in "${REQUESTED_SERVERS[@]}"; do
+  set_enabled "$server" true
+done
+
+if [[ ${#REQUESTED_SERVERS[@]} -eq 0 ]]; then
+  echo "Enabled MCPs: none"
+else
+  echo "Enabled MCPs: ${REQUESTED_SERVERS[*]}"
+fi
