@@ -207,6 +207,7 @@ in
       "oven-sh/bun/bun"
       "tsc"
       "sql-language-server"
+      "sqlfluff"
     ];
 
     casks = [
