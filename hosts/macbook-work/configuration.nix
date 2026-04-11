@@ -19,6 +19,7 @@
       "alvarosanchez/tap/ocp"
       "podman"
       "tomato"
+      "openjdk@21"
     ];
     casks = [
       "codex"

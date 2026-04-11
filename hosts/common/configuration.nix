@@ -206,6 +206,7 @@ in
       "httpie"
       "oven-sh/bun/bun"
       "tsc"
+      "sql-language-server"
     ];
 
     casks = [

@@ -99,6 +99,7 @@ return {
 				gopls = {},
 				eslint = {},
 				fish_lsp = {},
+				sqlls = {},
 			}
 
 			-- 4. configure + warn + enable
@@ -219,6 +220,7 @@ return {
 					less = { "prettierd", "prettier", stop_after_first = true },
 					go = { "gofumpt", "gofmt", stop_after_first = true },
 					fish = { "fish_indent" },
+					sql = { "sqlfluff" },
 					["_"] = { "trim_whitespace" },
 				},
 
@@ -226,6 +228,11 @@ return {
 					dockfmt = {
 						command = "dockfmt",
 						args = { "fmt", "-" },
+						stdin = true,
+					},
+					sqlfluff = {
+						command = "sqlfluff",
+						args = { "fix", "--dialect", "sqlite", "--disable-progress-bar", "-" },
 						stdin = true,
 					},
 				},
