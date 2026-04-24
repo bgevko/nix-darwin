@@ -234,6 +234,10 @@ return {
 						command = "sqlfluff",
 						args = { "fix", "--dialect", "sqlite", "--disable-progress-bar", "-" },
 						stdin = true,
+						require_cwd = false,
+						cwd = function()
+							return vim.fn.getcwd()
+						end,
 					},
 				},
 				format_on_save = {

@@ -20,6 +20,7 @@
       "podman"
       "tomato"
       "openjdk@21"
+      "oci-cli"
     ];
     casks = [
       "codex"

@@ -191,3 +191,6 @@ vim.api.nvim_create_autocmd("FileType", {
 		pcall(vim.treesitter.start)
 	end,
 })
+
+-- Restore LspInfo command, which was removed in nvim 0.12
+vim.api.nvim_create_user_command("LspInfo", "checkhealth vim.lsp", { desc = "Show LSP Info" })

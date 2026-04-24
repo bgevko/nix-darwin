@@ -208,6 +208,7 @@ in
       "tsc"
       "sql-language-server"
       "sqlfluff"
+      "yarn"
     ];
 
     casks = [
