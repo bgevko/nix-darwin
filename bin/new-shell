@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+TMPHOME="$(mktemp -d)"
+echo "$TMPHOME"
+
+exec env -i \
+  HOME="$TMPHOME" \
+  TMPHOME="$TMPHOME" \
+  USER="testuser" \
+  LOGNAME="testuser" \
+  SHELL="/bin/zsh" \
+  TERM="${TERM:-xterm-256color}" \
+  PATH="/usr/bin:/bin:/usr/sbin:/sbin" \
+  /bin/zsh -f

@@ -3,3 +3,4 @@ build.sh
 .sops.yaml
 configs/nvim/.DS_Store
 configs/.DS_Store
+hosts/.DS_Store
