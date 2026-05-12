@@ -13,6 +13,7 @@ in
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
+      atuin init fish | source
       if test -f "${dotfiles}/profiles/work.fish"
         source "${dotfiles}/profiles/work.fish"
       end

@@ -93,7 +93,9 @@ return {
 				html = {},
 				tailwindcss = {},
 				jsonls = {},
-				marksman = {},
+				marksman = {
+					cmd = { "env", "DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1", "marksman", "server" },
+				},
 				yamlls = {},
 				cssls = {},
 				gopls = {},

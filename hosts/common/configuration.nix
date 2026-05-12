@@ -209,6 +209,8 @@ in
       "sql-language-server"
       "sqlfluff"
       "yarn"
+      "atuin"
+      "openspec"
     ];
 
     casks = [
