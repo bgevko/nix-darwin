@@ -167,6 +167,12 @@
               "label" : "Confluence PAT",
               "type" : "url",
               "value" : "https://gbuconfluence.oraclecorp.com/plugins/personalaccesstokens/usertokens.action"
+            },
+            {
+              "key" : "B",
+              "label" : "USS Jira Board",
+              "type" : "url",
+              "value" : "https://gbujira.oraclecorp.com/secure/RapidBoard.jspa?projectKey=UAISS&rapidView=51924"
             }
           ],
           "iconPath" : "desktopcomputer",
@@ -176,9 +182,9 @@
         },
         {
           "key" : "g",
-          "label" : "GitHub",
+          "label" : "USS Devops SCM",
           "type" : "url",
-          "value" : "https://github.iad-dev.opower.it/"
+          "value" : "https://devops.oci.oraclecorp.com/devops-coderepository/projects/ocid1.devopsproject.oc1.phx.amaaaaaaw4vcxbyadvcfvdcl53w2vmz4jt7mmegfjdqrbvg43g3ndgmovrwa/repositories?_ctx=us-phoenix-1%2Cdevops_scm_central"
         },
         {
           "key" : "c",
