@@ -211,6 +211,7 @@ in
       "yarn"
       "atuin"
       "openspec"
+      "k9s"
     ];
 
     casks = [
