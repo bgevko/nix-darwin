@@ -36,6 +36,7 @@ return {
 					"typescriptreact",
 					"yaml",
 					"fish",
+					"odin",
 				},
 				callback = function()
 					-- highlighting (Neovim built-in)
@@ -102,6 +103,11 @@ return {
 				eslint = {},
 				fish_lsp = {},
 				sqlls = {},
+				ols = {
+					cmd = { "ols" },
+					filetypes = { "odin" },
+					root_markers = { "ols.json", "odin.json", ".git" },
+				},
 			}
 
 			-- 4. configure + warn + enable
@@ -223,6 +229,7 @@ return {
 					go = { "gofumpt", "gofmt", stop_after_first = true },
 					fish = { "fish_indent" },
 					sql = { "sqlfluff" },
+					odin = { "odinfmt" },
 					["_"] = { "trim_whitespace" },
 				},
 
@@ -240,6 +247,11 @@ return {
 						cwd = function()
 							return vim.fn.getcwd()
 						end,
+					},
+					odinfmt = {
+						command = "odinfmt",
+						args = { "-stdin" },
+						stdin = true,
 					},
 				},
 				format_on_save = {
