@@ -223,6 +223,8 @@ in
       "losslesscut"
       "postman"
       "figma"
+      "claude-code"
+      "codex"
     ];
 
     onActivation.cleanup = "none";
