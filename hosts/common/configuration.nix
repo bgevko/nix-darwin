@@ -162,6 +162,7 @@ in
     yaml-language-server
     vscode-langservers-extracted
     fish-lsp
+    taplo
 
     # formatters / linters
     stylua

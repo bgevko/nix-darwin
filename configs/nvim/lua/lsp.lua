@@ -10,6 +10,32 @@ return {
 		lazy = false,
 		build = ":TSUpdate",
 		config = function()
+			local function configure_ca65_parser()
+				require("nvim-treesitter.parsers").ca65 = {
+					install_info = {
+						url = "https://github.com/LLeny/tree-sitter-ca65",
+						branch = "main",
+					},
+				}
+			end
+
+			configure_ca65_parser()
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "TSUpdate",
+				callback = configure_ca65_parser,
+			})
+
+			vim.filetype.add({
+				extension = {
+					asm = "ca65",
+					ca65 = "ca65",
+					inc = "ca65",
+					s = "ca65",
+				},
+			})
+
+			vim.treesitter.language.register("ca65", { "asm", "ca65" })
+
 			require("nvim-treesitter").setup({
 				install_dir = vim.fn.stdpath("data") .. "/site",
 			})
@@ -19,6 +45,7 @@ return {
 				pattern = {
 					"bash",
 					"c",
+					"ca65",
 					"cmake",
 					"cpp",
 					"css",
@@ -35,6 +62,7 @@ return {
 					"scss",
 					"typescript",
 					"typescriptreact",
+					"toml",
 					"yaml",
 					"fish",
 					"odin",
@@ -95,6 +123,7 @@ return {
 				html = {},
 				tailwindcss = {},
 				jsonls = {},
+				taplo = {},
 				marksman = {
 					cmd = { "env", "DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1", "marksman", "server" },
 				},
@@ -123,7 +152,7 @@ return {
 				local cmd = conf and conf.cmd
 				local bin = type(cmd) == "table" and cmd[1] or cmd
 
-				if bin and vim.fn.executable(bin) == 0 then
+				if type(bin) == "string" and vim.fn.executable(bin) == 0 then
 					vim.notify(
 						("LSP '%s' not started: command '%s' not found in PATH"):format(name, bin),
 						vim.log.levels.WARN,
@@ -206,6 +235,7 @@ return {
 					lua = { "stylua" },
 					sh = { "shfmt" },
 					bash = { "shfmt" },
+					ca65 = { "caddy65" },
 					python = { "isort", "black" },
 					javascript = { "eslint_d" },
 					javascriptreact = { "eslint_d" },
@@ -222,6 +252,7 @@ return {
 					templ = { "prettierd", "prettier", stop_after_first = true },
 					json = { "prettierd", "prettier", stop_after_first = true },
 					jsonc = { "prettierd", "prettier", stop_after_first = true },
+					toml = { "taplo" },
 					-- markdown = { "prettierd", "prettier", stop_after_first = true },
 					yaml = { "yamlfmt" },
 					css = { "prettierd", "prettier", stop_after_first = true },
@@ -253,6 +284,11 @@ return {
 						command = "odinfmt",
 						args = { "-stdin" },
 						stdin = true,
+					},
+					caddy65 = {
+						command = "caddy65",
+						args = { "$FILENAME" },
+						stdin = false,
 					},
 				},
 				format_on_save = {

@@ -1,0 +1,12 @@
+WRN 2026-06-16T19:03:21.291 ?.79968    server_start:197: Failed to start server: operation not permitted: /var/folders/1f/f_rqtq1s2x56p3b1dl279r0c0000gn/T/nvim.bgevko/2AtsLN/nvim.79968.0
+WRN 2026-06-16T19:03:35.472 ?.80069    server_start:197: Failed to start server: operation not permitted: /var/folders/1f/f_rqtq1s2x56p3b1dl279r0c0000gn/T/nvim.bgevko/pyVsyW/nvim.80069.0
+WRN 2026-06-16T19:03:45.247 ?.80169    server_start:197: Failed to start server: operation not permitted: /var/folders/1f/f_rqtq1s2x56p3b1dl279r0c0000gn/T/nvim.bgevko/F7BbxO/nvim.80169.0
+WRN 2026-06-16T19:04:00.496 ?.80256    server_start:197: Failed to start server: operation not permitted: /var/folders/1f/f_rqtq1s2x56p3b1dl279r0c0000gn/T/nvim.bgevko/IclXzy/nvim.80256.0
+WRN 2026-06-16T19:04:00.496 ?.80257    server_start:197: Failed to start server: operation not permitted: /var/folders/1f/f_rqtq1s2x56p3b1dl279r0c0000gn/T/nvim.bgevko/or5ylr/nvim.80257.0
+WRN 2026-06-16T19:04:19.984 ?.80437    server_start:197: Failed to start server: operation not permitted: /var/folders/1f/f_rqtq1s2x56p3b1dl279r0c0000gn/T/nvim.bgevko/fmg2tm/nvim.80437.0
+WRN 2026-06-16T19:04:19.984 ?.80438    server_start:197: Failed to start server: operation not permitted: /var/folders/1f/f_rqtq1s2x56p3b1dl279r0c0000gn/T/nvim.bgevko/tHsChx/nvim.80438.0
+WRN 2026-06-16T19:04:55.293 ?.80626    server_start:197: Failed to start server: operation not permitted: /var/folders/1f/f_rqtq1s2x56p3b1dl279r0c0000gn/T/nvim.bgevko/MAUPQN/nvim.80626.0
+WRN 2026-06-16T19:04:55.383 ?.80675    server_start:197: Failed to start server: operation not permitted: /var/folders/1f/f_rqtq1s2x56p3b1dl279r0c0000gn/T/nvim.bgevko/y3HK2N/nvim.80675.0
+WRN 2026-06-16T19:05:00.120 ?.80820    server_start:197: Failed to start server: operation not permitted: /var/folders/1f/f_rqtq1s2x56p3b1dl279r0c0000gn/T/nvim.bgevko/weLBkw/nvim.80820.0
+WRN 2026-06-16T19:05:23.448 ?.80925    server_start:197: Failed to start server: operation not permitted: /var/folders/1f/f_rqtq1s2x56p3b1dl279r0c0000gn/T/nvim.bgevko/lqyWW8/nvim.80925.0
+WRN 2026-06-16T19:05:23.448 ?.80926    server_start:197: Failed to start server: operation not permitted: /var/folders/1f/f_rqtq1s2x56p3b1dl279r0c0000gn/T/nvim.bgevko/HTH8xU/nvim.80926.0
