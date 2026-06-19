@@ -31,6 +31,10 @@ return {
 					ca65 = "ca65",
 					inc = "ca65",
 					s = "ca65",
+					v = "verilog",
+					vh = "verilog",
+					sv = "systemverilog",
+					svh = "systemverilog",
 				},
 			})
 
@@ -66,6 +70,8 @@ return {
 					"yaml",
 					"fish",
 					"odin",
+					"verilog",
+					"systemverilog",
 				},
 				callback = function()
 					-- highlighting (Neovim built-in)
@@ -150,6 +156,7 @@ return {
 						".git",
 					},
 				},
+				veridian = {},
 			}
 
 			-- 4. configure + warn + enable
@@ -198,7 +205,9 @@ return {
 			map("n", "gi", vim.lsp.buf.implementation, { desc = "Goto Implementation" })
 			map("n", "gy", vim.lsp.buf.type_definition, { desc = "Goto Type Definition" })
 			map("n", "gD", vim.lsp.buf.declaration, { desc = "Goto Declaration" })
-			map("n", "K", vim.lsp.buf.hover, { desc = "Hover Documentation" })
+			map("n", "K", function()
+				vim.lsp.buf.hover()
+			end, { desc = "Hover Documentation" })
 			map("n", "gK", vim.lsp.buf.signature_help, { desc = "Signature Help" })
 			map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
 			map("n", "<leader>cr", vim.lsp.buf.rename, { desc = "Rename Symbol" })
@@ -274,6 +283,8 @@ return {
 					fish = { "fish_indent" },
 					sql = { "sqlfluff" },
 					odin = { "odinfmt" },
+					verilog = { "verible" },
+					systemverilog = { "verible" },
 					["_"] = { "trim_whitespace" },
 				},
 

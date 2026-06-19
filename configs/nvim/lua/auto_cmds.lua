@@ -175,16 +175,18 @@ autocmd("BufWritePre", {
 	end,
 })
 
---Format on save (respects global autoformat toggle)
-autocmd("BufWritePre", {
-	pattern = "*",
-	callback = function(args)
-		if vim.g.autoformat == false then
-			return
-		end
-		require("conform").format({ bufnr = args.buf })
-	end,
-})
+-- Format on save (respects global autoformat toggle).
+-- Disabled for now because conform.nvim already has format_on_save enabled in lsp.lua.
+-- Uncomment if conform's built-in save hook causes regressions.
+-- autocmd("BufWritePre", {
+-- 	pattern = "*",
+-- 	callback = function(args)
+-- 		if vim.g.autoformat == false then
+-- 			return
+-- 		end
+-- 		require("conform").format({ bufnr = args.buf })
+-- 	end,
+-- })
 
 vim.api.nvim_create_autocmd("FileType", {
 	callback = function()
