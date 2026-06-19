@@ -15,6 +15,7 @@ return {
 					install_info = {
 						url = "https://github.com/bgevko/tree-sitter-ca65.git",
 						branch = "main",
+						queries = "queries",
 					},
 				}
 			end

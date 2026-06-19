@@ -16,6 +16,10 @@
 
     brews = [
       "verilator"
+      "openfpgaloader"
+    ];
+    casks = [
+      "gtkwave"
     ];
 
     onActivation.cleanup = "none";
