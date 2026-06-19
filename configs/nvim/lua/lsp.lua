@@ -13,7 +13,7 @@ return {
 			local function configure_ca65_parser()
 				require("nvim-treesitter.parsers").ca65 = {
 					install_info = {
-						url = "https://github.com/LLeny/tree-sitter-ca65",
+						url = "https://github.com/bgevko/tree-sitter-ca65.git",
 						branch = "main",
 					},
 				}
@@ -137,6 +137,18 @@ return {
 					cmd = { "ols" },
 					filetypes = { "odin" },
 					root_markers = { "ols.json", "odin.json", ".git" },
+				},
+				ca65_lsp = {
+					cmd = { "ca65-lsp" },
+					filetypes = { "ca65" },
+					root_markers = {
+						"ca65.toml",
+						"cc65.toml",
+						"Makefile",
+						"makefile",
+						"build.ninja",
+						".git",
+					},
 				},
 			}
 

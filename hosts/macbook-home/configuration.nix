@@ -12,4 +12,14 @@
     { app = "/Applications/Nix Apps/kitty.app/"; }
     { app = "/Applications/Brave Browser.app/"; }
   ];
+  homebrew = {
+
+    brews = [
+      "verilator"
+    ];
+
+    onActivation.cleanup = "none";
+    onActivation.autoUpdate = true;
+    onActivation.upgrade = true;
+  };
 }
