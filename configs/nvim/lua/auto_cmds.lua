@@ -14,6 +14,7 @@ local man_unlisted = augroup("man_unlisted", { clear = true })
 local wrap_spell = augroup("wrap_spell", { clear = true })
 local json_conceal = augroup("json_conceal", { clear = true })
 local auto_create_dir = augroup("auto_create_dir", { clear = true })
+local project_on_save = augroup("project_on_save", { clear = true })
 local treesitter_notify = augroup("treesitter_notify", { clear = true })
 
 -- ──────────────────────────────────────────────────────────────
@@ -175,18 +176,61 @@ autocmd("BufWritePre", {
 	end,
 })
 
--- Format on save (respects global autoformat toggle).
--- Disabled for now because conform.nvim already has format_on_save enabled in lsp.lua.
--- Uncomment if conform's built-in save hook causes regressions.
--- autocmd("BufWritePre", {
--- 	pattern = "*",
--- 	callback = function(args)
--- 		if vim.g.autoformat == false then
--- 			return
--- 		end
--- 		require("conform").format({ bufnr = args.buf })
--- 	end,
--- })
+-- ──────────────────────────────────────────────────────────────
+-- Project-local save hook
+-- ──────────────────────────────────────────────────────────────
+autocmd("BufWritePost", {
+	group = project_on_save,
+	pattern = "*",
+	callback = function(event)
+		if vim.bo[event.buf].buftype ~= "" then
+			return
+		end
+
+		local file = vim.uv.fs_realpath(event.match) or event.match
+		local dir = vim.fs.dirname(file)
+		if not dir then
+			return
+		end
+
+		local hook = vim.fs.find(".nvim/on-save", {
+			path = dir,
+			upward = true,
+			type = "file",
+		})[1]
+		if not hook or vim.fn.executable(hook) ~= 1 then
+			return
+		end
+
+		local project_root = vim.fs.dirname(vim.fs.dirname(hook))
+		vim.system({
+			hook,
+			file,
+			project_root,
+		}, {
+			cwd = project_root,
+			text = true,
+			env = {
+				NVIM_SAVE_FILE = file,
+				NVIM_PROJECT_ROOT = project_root,
+				NVIM_FILETYPE = vim.bo[event.buf].filetype,
+			},
+		}, function(result)
+			if result.code == 0 then
+				return
+			end
+
+			local msg = vim.trim((result.stderr or "") .. "\n" .. (result.stdout or ""))
+			if msg == "" then
+				msg = ".nvim/on-save failed with exit code " .. result.code
+			end
+
+			vim.schedule(function()
+				vim.notify(msg, vim.log.levels.ERROR, { title = ".nvim/on-save" })
+			end)
+		end)
+	end,
+})
 
 vim.api.nvim_create_autocmd("FileType", {
 	callback = function()
