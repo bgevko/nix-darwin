@@ -203,7 +203,83 @@ autocmd("BufWritePost", {
 		end
 
 		local project_root = vim.fs.dirname(vim.fs.dirname(hook))
-		vim.system({
+		local patterns_file = project_root .. "/.nvim/on-save.patterns"
+		if vim.uv.fs_stat(patterns_file) then
+			local rel_file = vim.fs.relpath(project_root, file) or file
+			local matched = false
+
+			for _, pattern in ipairs(vim.fn.readfile(patterns_file)) do
+				pattern = vim.trim(pattern)
+				if pattern ~= "" and not vim.startswith(pattern, "#") then
+					local regex = vim.fn.glob2regpat(pattern)
+					if vim.fn.match(rel_file, regex) >= 0 or vim.fn.match(file, regex) >= 0 then
+						matched = true
+						break
+					end
+				end
+			end
+
+			if not matched then
+				return
+			end
+		end
+
+		local function find_output_buf()
+			for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+				if vim.api.nvim_buf_is_valid(buf) and vim.b[buf].on_save_output then
+					return buf
+				end
+			end
+			return nil
+		end
+
+		local function close_output_window()
+			local buf = find_output_buf()
+			if not buf then
+				return
+			end
+
+			for _, win in ipairs(vim.fn.win_findbuf(buf)) do
+				if vim.api.nvim_win_is_valid(win) then
+					vim.api.nvim_win_close(win, true)
+				end
+			end
+		end
+
+		local function open_output_buffer(lines)
+			local buf = find_output_buf()
+			if not buf then
+				buf = vim.api.nvim_create_buf(false, true)
+				vim.api.nvim_buf_set_name(buf, "[on-save]")
+				vim.b[buf].on_save_output = true
+				vim.bo[buf].buftype = "nofile"
+				vim.bo[buf].bufhidden = "hide"
+				vim.bo[buf].swapfile = false
+				vim.bo[buf].filetype = "on-save-log"
+				vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = buf, silent = true, desc = "Close on-save output" })
+			end
+
+			vim.bo[buf].modifiable = true
+			vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+			vim.bo[buf].modifiable = false
+
+			local win = vim.fn.win_findbuf(buf)[1]
+			if win and vim.api.nvim_win_is_valid(win) then
+				vim.api.nvim_set_current_win(win)
+			else
+				vim.cmd("botright 12split")
+				vim.api.nvim_win_set_buf(0, buf)
+			end
+
+			vim.cmd("normal! G")
+		end
+
+		local function notify_hook(message, level)
+			local highlight = level == vim.log.levels.ERROR and "ErrorMsg" or "MoreMsg"
+			vim.api.nvim_echo({ { ".nvim/on-save: " .. message, highlight } }, true, {})
+		end
+
+		local result = vim.system({
 			hook,
 			file,
 			project_root,
@@ -215,20 +291,30 @@ autocmd("BufWritePost", {
 				NVIM_PROJECT_ROOT = project_root,
 				NVIM_FILETYPE = vim.bo[event.buf].filetype,
 			},
-		}, function(result)
-			if result.code == 0 then
-				return
-			end
+		}):wait()
 
-			local msg = vim.trim((result.stderr or "") .. "\n" .. (result.stdout or ""))
-			if msg == "" then
-				msg = ".nvim/on-save failed with exit code " .. result.code
-			end
+		if result.code == 0 then
+			close_output_window()
+			notify_hook("completed", vim.log.levels.INFO)
+			return
+		end
 
-			vim.schedule(function()
-				vim.notify(msg, vim.log.levels.ERROR, { title = ".nvim/on-save" })
-			end)
-		end)
+		local msg = vim.trim((result.stderr or "") .. "\n" .. (result.stdout or ""))
+		if msg == "" then
+			msg = "failed with exit code " .. result.code
+		end
+
+		local output_lines = {
+			".nvim/on-save failed",
+			"file: " .. file,
+			"hook: " .. hook,
+			"exit: " .. tostring(result.code),
+			"",
+		}
+		vim.list_extend(output_lines, vim.split(msg, "\n", { plain = true }))
+
+		open_output_buffer(output_lines)
+		notify_hook("failed", vim.log.levels.ERROR)
 	end,
 })
 
@@ -237,6 +323,28 @@ vim.api.nvim_create_autocmd("FileType", {
 		pcall(vim.treesitter.start)
 	end,
 })
+
+vim.api.nvim_create_user_command("OnSaveHookStatus", function()
+	local file = vim.uv.fs_realpath(vim.api.nvim_buf_get_name(0)) or vim.api.nvim_buf_get_name(0)
+	local dir = vim.fs.dirname(file)
+	local hook = dir
+			and vim.fs.find(".nvim/on-save", {
+				path = dir,
+				upward = true,
+				type = "file",
+			})[1]
+		or nil
+
+	local autocmds = vim.api.nvim_get_autocmds({ group = "project_on_save", event = "BufWritePost" })
+	local lines = {
+		"buffer: " .. (file ~= "" and file or "<none>"),
+		"hook: " .. (hook or "<not found>"),
+		"hook executable: " .. ((hook and vim.fn.executable(hook) == 1) and "yes" or "no"),
+		"autocmds: " .. tostring(#autocmds),
+	}
+
+	vim.api.nvim_echo({ { table.concat(lines, "\n"), "MoreMsg" } }, true, {})
+end, { desc = "Show project .nvim/on-save hook status" })
 
 -- Restore LspInfo command, which was removed in nvim 0.12
 vim.api.nvim_create_user_command("LspInfo", "checkhealth vim.lsp", { desc = "Show LSP Info" })

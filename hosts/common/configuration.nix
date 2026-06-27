@@ -144,8 +144,6 @@ in
     base16-schemes
 
     # GUI apps (nix-managed)
-    _1password-gui
-    qutebrowser
     kitty
 
     # LSPs
@@ -221,12 +219,11 @@ in
       "raycast"
       "brave-browser"
       "font-space-mono-nerd-font"
-      "1password"
       "losslesscut"
       "postman"
       "figma"
-      "claude-code"
       "codex"
+      "1password"
     ];
 
     onActivation.cleanup = "none";
