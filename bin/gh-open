@@ -6,7 +6,7 @@ usage() {
 Usage:
   gh-repo
 
-Opens the GitHub repository page for the current directory,
+Opens the repository page for the current directory,
 derived from the 'origin' git remote.
 
 Example:
@@ -40,6 +40,14 @@ if [[ "$origin_url" =~ ^git@([^:]+):(.+)$ ]]; then
   host="${BASH_REMATCH[1]}"
   path="${BASH_REMATCH[2]%.git}"
   repo_url="https://${host}/${path}"
+elif [[ "$origin_url" =~ ^ssh://([^@/]+@)?([^/]+)/(.+)$ ]]; then
+  host="${BASH_REMATCH[2]}"
+  path="${BASH_REMATCH[3]%.git}"
+  if [[ "$host" =~ ^oci\.private\.devops\.scmservice\. ]]; then
+    repo_url="https://devops.oci.oraclecorp.com/devops-coderepository/${path}"
+  else
+    repo_url="https://${host}/${path}"
+  fi
 elif [[ "$origin_url" =~ ^https?:// ]]; then
   repo_url="${origin_url%.git}"
 else

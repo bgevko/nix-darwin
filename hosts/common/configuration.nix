@@ -211,6 +211,7 @@ in
       "atuin"
       "openspec"
       "k9s"
+      "glow"
     ];
 
     casks = [

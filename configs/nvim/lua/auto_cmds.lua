@@ -176,6 +176,17 @@ autocmd("BufWritePre", {
 	end,
 })
 
+-- Format on save (respects global autoformat toggle)
+autocmd("BufWritePre", {
+	pattern = "*",
+	callback = function(args)
+		if vim.g.autoformat == false then
+			return
+		end
+		require("conform").format({ bufnr = args.buf, lsp_fallback = true })
+	end,
+})
+
 -- ──────────────────────────────────────────────────────────────
 -- Project-local save hook
 -- ──────────────────────────────────────────────────────────────

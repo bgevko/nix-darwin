@@ -191,6 +191,18 @@
           "label" : "Codex PAT",
           "type" : "url",
           "value" : "https://apex.oraclecorp.com/pls/apex/r/oca/api-key/home"
+        },
+        {
+          "key" : "i",
+          "label" : "ICA UI",
+          "type" : "url",
+          "value" : "https://lknomujztqtx6ex46kpelokaoa.apigateway.us-phoenix-1.oci.customer-oci.com/ica-ui/"
+        },
+        {
+          "key" : "b",
+          "label" : "Backoffice UI",
+          "type" : "url",
+          "value" : "https://lknomujztqtx6ex46kpelokaoa.apigateway.us-phoenix-1.oci.customer-oci.com/backoffice-ui/"
         }
       ],
       "iconPath" : "globe",
