@@ -44,6 +44,7 @@ return {
 			require("nvim-treesitter").setup({
 				install_dir = vim.fn.stdpath("data") .. "/site",
 			})
+			require("nvim-treesitter").install({ "java" })
 
 			-- optional: auto-enable features for your languages
 			vim.api.nvim_create_autocmd("FileType", {
@@ -57,6 +58,7 @@ return {
 					"dockerfile",
 					"go",
 					"html",
+					"java",
 					"javascript",
 					"json",
 					"lua",
@@ -130,13 +132,14 @@ return {
 				html = {},
 				tailwindcss = {},
 				jsonls = {},
-				taplo = {},
+				-- taplo = {},
 				marksman = {
 					cmd = { "env", "DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1", "marksman", "server" },
 				},
 				yamlls = {},
 				cssls = {},
 				gopls = {},
+				jdtls = {},
 				eslint = {},
 				fish_lsp = {},
 				sqlls = {},
@@ -145,19 +148,19 @@ return {
 					filetypes = { "odin" },
 					root_markers = { "ols.json", "odin.json", ".git" },
 				},
-				ca65_lsp = {
-					cmd = { "ca65-lsp" },
-					filetypes = { "ca65" },
-					root_markers = {
-						"ca65.toml",
-						"cc65.toml",
-						"Makefile",
-						"makefile",
-						"build.ninja",
-						".git",
-					},
-				},
-				veridian = {},
+				-- ca65_lsp = {
+				-- 	cmd = { "ca65-lsp" },
+				-- 	filetypes = { "ca65" },
+				-- 	root_markers = {
+				-- 		"ca65.toml",
+				-- 		"cc65.toml",
+				-- 		"Makefile",
+				-- 		"makefile",
+				-- 		"build.ninja",
+				-- 		".git",
+				-- 	},
+				-- },
+				-- veridian = {},
 			}
 
 			-- 4. configure + warn + enable
@@ -274,7 +277,7 @@ return {
 					templ = { "prettierd", "prettier", stop_after_first = true },
 					json = { "prettierd", "prettier", stop_after_first = true },
 					jsonc = { "prettierd", "prettier", stop_after_first = true },
-					toml = { "taplo" },
+					-- toml = { "taplo" },
 					-- markdown = { "prettierd", "prettier", stop_after_first = true },
 					yaml = { "yamlfmt" },
 					css = { "prettierd", "prettier", stop_after_first = true },
@@ -282,6 +285,7 @@ return {
 					less = { "prettierd", "prettier", stop_after_first = true },
 					go = { "gofumpt", "gofmt", stop_after_first = true },
 					fish = { "fish_indent" },
+					java = { "google-java-format" },
 					sql = { "sqlfluff" },
 					odin = { "odinfmt" },
 					verilog = { "verible" },

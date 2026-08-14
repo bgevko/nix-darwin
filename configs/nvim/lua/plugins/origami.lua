@@ -10,9 +10,7 @@ return {
 			pauseFoldsOnSearch = true,
 			foldtext = {
 				enabled = true,
-				padding = {
-					width = 3,
-				},
+				padding = 3,
 				lineCount = {
 					template = "%d lines", -- `%d` is replaced with the number of folded lines
 					hlgroup = "Purple",

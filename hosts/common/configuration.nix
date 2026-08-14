@@ -212,6 +212,8 @@ in
       "openspec"
       "k9s"
       "glow"
+      "jdtls"
+      "goolge-java-format"
     ];
 
     casks = [
